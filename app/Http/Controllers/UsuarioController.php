@@ -43,11 +43,10 @@ class UsuarioController extends Controller {
         $usuario->telefono = $request->telefono;
         $usuario->calificacion = $request->calificacion;
         $usuario->fotoPerfil = $request->fotoPerfil;*/
-        echo $usuario;
         
-        return $usuario->save();
+        return $request;
 
-    ]);   
+       
     }
 
     /**
