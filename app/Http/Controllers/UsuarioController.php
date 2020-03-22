@@ -44,6 +44,7 @@ class UsuarioController extends Controller {
 
         $usuario = new usuario($data);
         $usuario->contrasena=Hash::make($usuario->contrasena);
+        $usuario->save();
 
 
         return "{}";
