@@ -40,6 +40,7 @@ class UsuarioController extends Controller {
 
         Validator::make($data, [
             'email' => 'required|email|unique:App\Usuario',
+            'email' => 'exists:email'
         ])->validate();
 
         $usuario = new usuario($data);
