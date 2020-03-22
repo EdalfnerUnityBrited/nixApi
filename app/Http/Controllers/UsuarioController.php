@@ -31,6 +31,7 @@ class UsuarioController extends Controller {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    use Illuminate\Support\Facades\Validator;
     public function store(Request $request) {
         $usuario = new Usuario;
          
