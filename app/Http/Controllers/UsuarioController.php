@@ -47,9 +47,9 @@ class UsuarioController extends Controller {
         
         $data = json_decode($request, true);
 
-        $validator = Validator::make($request->all(), [
-            'email' => 'email address',
-        ]);
+        Validator::make($data, [
+            'email' => 'required|email|unique:App\Usuario',
+        ])->validate();
         return $data;
 
 
