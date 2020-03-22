@@ -44,7 +44,13 @@ class UsuarioController extends Controller {
         $usuario->calificacion = $request->calificacion;
         $usuario->fotoPerfil = $request->fotoPerfil;*/
         
-        return $request;
+        $data = json_decode($request, true);
+
+        $validator = Validator::make($data->all(), [
+            'email' => 'email address',
+        ]);
+        return $data;
+
 
        
     }
