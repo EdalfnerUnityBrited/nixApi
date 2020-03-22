@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Controller;
 use App\Usuario;
 
 class UsuarioController extends Controller {
@@ -33,27 +35,19 @@ class UsuarioController extends Controller {
      */
 
     public function store(Request $request) {
-        $usuario = new Usuario;
-         
-        /*$usuario->tipoUsuario = $request->tipoUsuario;
-        $usuario->apellidoP = $request->apellidoP;
-        $usuario->apellidoM = $request->apellidoM;
-        $usuario->email = $request->email;
-        $usuario->contrasena = $request->contrasena;
-        $usuario->fechaNac = $request->fechaNac;
-        $usuario->telefono = $request->telefono;
-        $usuario->calificacion = $request->calificacion;
-        $usuario->fotoPerfil = $request->fotoPerfil;*/
-        
-        $data = json_decode($request, true);
+        $usuario = new Usuario;  
+        $data = json_decode($request->getContent(), true);
 
         Validator::make($data, [
             'email' => 'required|email|unique:App\Usuario',
         ])->validate();
-        return $data;
+
+        $usuario = new usuario($data);
+        $usuario->contrasena=Hash::make($usuario->contrasena);
+
+        return $usuario->save();
 
 
-       
     }
 
     /**
