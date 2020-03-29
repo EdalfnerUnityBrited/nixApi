@@ -16,11 +16,11 @@ class ChatsController extends Controller
         $data = json_decode($request->getContent(), true);
         
         Validator::make($data, [
-            'id_usuario'     => 'required',
             'id_proveedor'    => 'required',
         ])->validate();
-
+        $user = $request->user();
         $chats = new Chats($data);
+        $chats->id_usuario=$user["id"];
         $chats->save();
         return response()->json([
                     'message' => 'Successfully created chat!'], 201);
