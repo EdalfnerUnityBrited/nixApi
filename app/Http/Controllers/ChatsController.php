@@ -18,6 +18,10 @@ class ChatsController extends Controller
         Validator::make($data, [
             'id_proveedor'    => 'required',
         ])->validate();
+
+
+
+
         $user = $request->user();
         $chats = new Chats($data);
         $chats->id_usuario=$user["id"];
@@ -33,7 +37,13 @@ class ChatsController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
-        $chats = Chats::where('id_usuario', $user["id"])->get();
+       $chats =DB::table('chats')
+                ->join('users', 'chats.id_proveedor', '=', 'users.id')
+                ->select('users.email')
+                ->where('id_usuario', $user["id"])
+                ->get();
+
+
         return response()->json(['chats'=>$chats]);
     }
 
