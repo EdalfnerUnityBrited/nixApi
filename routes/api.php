@@ -23,4 +23,17 @@ Route::group(['prefix' => 'auth'], function () {
         Route::get('logout', 'AuthController@logout');
         Route::get('user', 'AuthController@user');
     });
+
+});
+//faststoragetransaction
+Route::group(['middleware' => 'auth:api'], function() {
+
+	Route::group(['prefix' => 'chats'], function () {
+		Route::get('', 'ChatsController@index');
+	    Route::post('', 'ChatsController@newchat');
+	    
+	    //Route::get('store', 'ChatsController@store');
+	});
+
+
 });
