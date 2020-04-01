@@ -36,7 +36,8 @@ Route::group(['middleware' => 'auth:api'], function() {
 	});
 
 		Route::group(['prefix' => 'eventos'], function () {
-		Route::get('', 'EventosController@index');
+		Route::get('usuario', 'EventosController@getUserEvents');
+		Route::get('todos', 'EventosController@getAllEvents');
 	    Route::post('', 'EventosController@newevento');
 	    
 	    //Route::get('store', 'ChatsController@store');

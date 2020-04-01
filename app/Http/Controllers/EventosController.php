@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\User;
+use App\Cupo;
 use App\Eventos;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class EventosController extends Controller
 {
@@ -18,9 +20,17 @@ class EventosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function getUserEvents(Request $request)
     {
-        
+        $user =$request->user();
+
+        $evento =DB::table('eventos')
+                ->join('users', 'eventos.id_creador', '=', 'users.id')
+                ->select('eventos.*','users.telefono', 'users.name')
+                ->where('id_creador', $user["id"])
+                ->get();
+                return response()->json(['eventos'=>$evento]);
+    
     }
 
 
@@ -36,7 +46,6 @@ class EventosController extends Controller
 
 
         $user = $request->user();
-        
         $evento = new Eventos($data);
         $evento->id_creador=$user["id"];
         $evento->save();
@@ -48,9 +57,10 @@ class EventosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function getAllEvents()
     {
-        //
+         $eventos = DB::table('eventos')->get();
+        return response()->json(['eventos'=>$eventos]);
     }
 
     /**

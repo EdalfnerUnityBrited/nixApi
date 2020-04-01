@@ -17,9 +17,10 @@ class Eventos extends Model
         'hora',
         'lugar',
         'descripcion',
+        'cupo',
 
     ];
          protected $hidden = [
-        'id',
+        'id'
     ];
 }
