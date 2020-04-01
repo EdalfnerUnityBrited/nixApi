@@ -35,5 +35,10 @@ Route::group(['middleware' => 'auth:api'], function() {
 	    //Route::get('store', 'ChatsController@store');
 	});
 
-
+		Route::group(['prefix' => 'eventos'], function () {
+		Route::get('', 'EventosController@index');
+	    Route::post('', 'EventosController@newevento');
+	    
+	    //Route::get('store', 'ChatsController@store');
+	});
 });
