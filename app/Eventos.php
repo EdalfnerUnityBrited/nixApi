@@ -18,6 +18,7 @@ class Eventos extends Model
         'lugar',
         'descripcion',
         'cupo',
+        'cover',
 
     ];
          protected $hidden = [
