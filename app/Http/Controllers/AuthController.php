@@ -48,15 +48,15 @@ class AuthController extends Controller
             $token->expires_at = Carbon::now()->addWeeks(1);
         }
         $token->save();
-		return response()->json([
+        return response()->json([
                     'access_token' => $tokenResult->accessToken,
                     'token_type' => 'Bearer',
                     'expires_at' => Carbon::parse(
                                     $tokenResult->token->expires_at)
                             ->toDateTimeString(),
-                    'usuario' => $user,
+                            'user'=>$user
         ]);
-	}
+    }
     
     public function logout(Request $request)
     {
@@ -68,5 +68,13 @@ class AuthController extends Controller
     public function user(Request $request)
     {
         return response()->json($request->user());
+    }
+    public function cambioFoto(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+        $user = $request->user();
+        $user->fotoPerfil = $request->input('fotoPerfil');
+        $user->save();
+        return response()->json(['message'=>'Successfully updated photo']);
     }
 }
