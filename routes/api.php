@@ -24,6 +24,7 @@ Route::group(['prefix' => 'auth'], function () {
         Route::get('user', 'AuthController@user');
         Route::put('foto', 'AuthController@cambioFoto');
         Route::put('user', 'AuthController@cambioDatos');
+        Route::put('password', 'AuthController@cambioContrasena');
     });
 
 });
