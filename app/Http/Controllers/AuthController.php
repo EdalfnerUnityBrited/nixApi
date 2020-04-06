@@ -82,17 +82,27 @@ class AuthController extends Controller
         $data = json_decode($request->getContent(), true);
          Validator::make($data, [
             'name' => 'required|string',
+            'apellidoP'=>'required|string',
+            'apellidoM'=>'required|string',
             'fechaNac' => 'required|string',
             'telefono' => 'required|string',
-            'password' => 'required|string|confirmed',
         ])->validate();
         $user=$request->user();
         $user->name= $request->input('name');
         $user->fechaNac=$request->input('fechaNac');
         $user->telefono=$request->input('telefono');
-        $user->password=$request->input('password');
-        $user->password = Hash::make($user->password);
         $user->save();
         return response()->json(['message'=>'Successfully updated data']);
+    }
+    public function cambioContrasena(Request $request){
+        $data = json_decode($request->getContent(), true);
+         Validator::make($data, [
+            'password' => 'required|string|confirmed',
+        ])->validate();
+         $user=$request->user();
+         $user->password=$request->input('password');
+         $user->password = Hash::make($user->password);
+         $user->save();
+         return response()->json(['message'=>'Successfully updated password']);
     }
 }
