@@ -89,6 +89,8 @@ class AuthController extends Controller
         ])->validate();
         $user=$request->user();
         $user->name= $request->input('name');
+        $user->apellidoP= $request->input('apellidoP');
+        $user->apellidoM=$request->input('apellidoM');
         $user->fechaNac=$request->input('fechaNac');
         $user->telefono=$request->input('telefono');
         $user->save();
