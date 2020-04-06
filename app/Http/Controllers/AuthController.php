@@ -71,10 +71,28 @@ class AuthController extends Controller
     }
     public function cambioFoto(Request $request)
     {
-        $data = json_decode($request->getContent(), true);
+        
         $user = $request->user();
         $user->fotoPerfil = $request->input('fotoPerfil');
         $user->save();
         return response()->json(['message'=>'Successfully updated photo']);
+    }
+    public function cambioDatos(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+         Validator::make($data, [
+            'name' => 'required|string',
+            'fechaNac' => 'required|string',
+            'telefono' => 'required|string',
+            'password' => 'required|string|confirmed',
+        ])->validate();
+        $user=$request->user();
+        $user->name= $request->input('name');
+        $user->fechaNac=$request->input('fechaNac');
+        $user->telefono=$request->input('telefono');
+        $user->password=$request->input('password');
+        $user->password = Hash::make($user->password);
+        $user->save();
+        return response()->json(['message'=>'Successfully updated data']);
     }
 }
