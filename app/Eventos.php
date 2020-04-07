@@ -9,6 +9,7 @@ class Eventos extends Model
     //
     public $timestamps = false;
     protected $fillable = [
+    	'id',
         'nombre_evento',
         'privacidad',
         'categoria_evento',
@@ -21,7 +22,5 @@ class Eventos extends Model
         'cover',
 
     ];
-         protected $hidden = [
-        'id'
-    ];
+
 }

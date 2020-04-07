@@ -49,8 +49,15 @@ class EventosController extends Controller
         $evento = new Eventos($data);
         $evento->id_creador=$user["id"];
         $evento->save();
+
+        
+        $eventoActual= $evento;
+        DB::table('imageneventos')->insert([
+            'imagen' => $request->input('fotoevento'),
+            'id_evento' => $eventoActual->id,
+            ]);
         return response()->json([
-                    'message' => 'Successfully created event!'], 201);
+                    'message' => 'Event created succesfully'], 201);
     }
     /**
      * Show the form for creating a new resource.
