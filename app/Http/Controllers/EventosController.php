@@ -26,9 +26,11 @@ class EventosController extends Controller
 
         $evento =DB::table('eventos')
                 ->join('users', 'eventos.id_creador', '=', 'users.id')
-                ->select('eventos.*','users.telefono', 'users.name')
+                ->join('imageneventos', 'imageneventos.id_evento','=','eventos.id')
+                ->select('eventos.*','users.telefono', 'users.name','imageneventos.imagen')
                 ->where('id_creador', $user["id"])
                 ->get();
+
                 return response()->json(['eventos'=>$evento]);
     
     }
