@@ -45,4 +45,10 @@ Route::group(['middleware' => 'auth:api'], function() {
 	    
 	    //Route::get('store', 'ChatsController@store');
 	});
+
+		Route::group(['prefix'=>'imagen'],function(){
+		Route::post('','ImagenEventoController@addImage');
+		});
+
+
 });

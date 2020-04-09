@@ -8,60 +8,39 @@ use Illuminate\Support\Facades\Validator;
 use App\User;
 use App\Cupo;
 use App\Eventos;
+use App\Imageneventos;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
-class EventosController extends Controller
+class ImagenEventoController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function getUserEvents(Request $request)
-    {
-        $user =$request->user();
-
-        $evento =DB::table('eventos')
-                ->join('users', 'eventos.id_creador', '=', 'users.id')
-                ->select('eventos.*','users.telefono', 'users.name')
-                ->where('id_creador', $user["id"])
-                ->get();
-
-        $imagen=DB::table('eventos')
-                ->join('users', 'eventos.id_creador', '=', 'users.id')
-                ->join('imageneventos','eventos.id','=','imageneventos.id_evento')
-                ->select('imagen','imageneventos.id_evento')
-                ->where('id_creador', $user["id"])
-                ->get();
-                return response()->json(['eventos'=>$evento,
-                                            'imagenes'=>$imagen]);
-    
-    }
-
-
-    public function newevento(Request $request)
+    public function addImage(Request $request)
     {
         $data = json_decode($request->getContent(), true);
- 
-        $user = $request->user();
-        $evento = new Eventos($data);
-        $evento->id_creador=$user["id"];
-        $evento->save();
-        return response()->json([
-                    'evento' => $evento->id], 201);
+        $imagenes=collect($data)->all();
+        foreach ($imagenes as $imagen) {
+            $image= new Imageneventos($imagen);
+            $image->save();
+        }
+        
+        return response()->json(['message'=>'Successfully added photos'], 201);
     }
+
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function getAllEvents()
+    public function create()
     {
-         $eventos = DB::table('eventos')->get();
-        return response()->json(['eventos'=>$eventos]);
+        //
     }
 
     /**
