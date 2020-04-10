@@ -51,7 +51,7 @@ class EventosController extends Controller
         $evento->id_creador=$user["id"];
         $evento->save();
         return response()->json([
-                    'evento' => $evento->id], 201);
+                    'eventos' => $evento], 201);
     }
     /**
      * Show the form for creating a new resource.
