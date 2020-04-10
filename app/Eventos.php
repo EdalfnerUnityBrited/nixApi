@@ -20,7 +20,7 @@ class Eventos extends Model
         'descripcion',
         'cupo',
         'cover',
-
+        'fotoPrincipal'
     ];
 
 }

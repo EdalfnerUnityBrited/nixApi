@@ -28,7 +28,7 @@ class EventosController extends Controller
                 ->join('users', 'eventos.id_creador', '=', 'users.id')
                 ->select('eventos.*','users.telefono', 'users.name')
                 ->where('id_creador', $user["id"])
-                ->first();
+                ->get();
                 return response()->json(['eventos'=>$evento]);
     
     }
