@@ -42,6 +42,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 		Route::get('usuario', 'EventosController@getUserEvents');
 		Route::get('todos', 'EventosController@getAllEvents');
 	    Route::post('', 'EventosController@newevento');
+	    Route::delete('', 'EventosController@destroy');
 	    
 	    //Route::get('store', 'ChatsController@store');
 	});

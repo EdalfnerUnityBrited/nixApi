@@ -107,8 +107,12 @@ class EventosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy(Request $request)
+    { 
+        $data = json_decode($request->getContent(), true);
+        $evento =DB::table('eventos')
+                ->where('id','=', $request->input('id'))
+                ->delete();
+                return response()->json(['eventos'=>"Event deleted succesfully!"]);   
     }
 }
