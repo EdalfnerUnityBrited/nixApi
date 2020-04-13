@@ -84,9 +84,19 @@ class EventosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function buscarEvento(Request $request)
     {
-        //
+        $data = json_decode($request->getContent(), true);
+        $separar=$request->input('ingresar');
+        $evento = DB::table('eventos')
+                        ->select('eventos.*')
+                        ->where('nombre_evento', 'like', '%'.$separar.'%')
+                        ->get();
+
+        
+        //return response()->json(['eventos'=>$separar[1]]);  
+    
+                return response()->json(['eventos'=>$evento]);
     }
 
     /**
