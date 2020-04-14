@@ -52,7 +52,9 @@ class EventosController extends Controller
      */
     public function getAllEvents()
     {
-         $eventos = DB::table('eventos')->get();
+         $eventos = DB::table('eventos')
+         ->where('privacidad','0')
+         ->get();
         return response()->json(['eventos'=>$eventos]);
     }
 
@@ -64,7 +66,25 @@ class EventosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $nombre_evento    = $request->get('nombre_evento');
+        $categoria_evento = $request->get('categoria_evento');
+        $cover = $request->get('cover');
+        $lugar = $request->get('lugar');
+        $fecha = $request->get('fecha');
+        $cupo = $request->get('cupo');
+        $hora = $request->get('hora');
+
+        $eventos = Eventos::orderBy('id','DESC')
+        ->nombre_evento($nombre_evento)
+        ->categoria_evento($categoria_evento)
+        ->cover($cover)
+        ->lugar($lugar)
+        ->fecha($fecha)
+        ->cupo($cupo)
+        ->hora($hora)
+        ->get();
+
+        return response()->json(['eventos'=>$eventos]);
     }
 
     /**

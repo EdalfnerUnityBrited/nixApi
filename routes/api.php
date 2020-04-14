@@ -44,7 +44,8 @@ Route::group(['middleware' => 'auth:api'], function() {
 	    Route::post('', 'EventosController@newevento');
 	    Route::delete('', 'EventosController@destroy');
 	    Route::post('buscar','EventosController@buscarEvento');
-	    
+	    Route::post('buscarEvento','EventosController@store');
+
 	    //Route::get('store', 'ChatsController@store');
 	});
 
