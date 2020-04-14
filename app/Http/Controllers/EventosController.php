@@ -107,7 +107,7 @@ class EventosController extends Controller
     public function buscarEvento(Request $request)
     {
         $data = json_decode($request->getContent(), true);
-        $separar=$request->input('ingresar');
+        $separar=$request->input('nombre_evento');
         $evento = DB::table('eventos')
                         ->select('eventos.*')
                         ->where('nombre_evento', 'like', '%'.$separar.'%')
