@@ -36,8 +36,7 @@ class ProspectosController extends Controller
             ->select('eventos.*','prospectos.estado')
             ->where('id_prospecto',$user["id"])
             ->get();
-        return response()->json([
-                    'eventos',$eventos]);
+        return response()->json(['eventos'=>$eventos]);
     }
 
     /**
@@ -54,8 +53,7 @@ class ProspectosController extends Controller
         $prospectos = new Prospectos($data);
         $prospectos->id_creador=$user["id"];
         $prospectos->save();
-        return response()->json([
-                    'eventos' => $evento], 201);
+       return response()->json(['eventos'=>$eventos]);
     }
 
     /**
