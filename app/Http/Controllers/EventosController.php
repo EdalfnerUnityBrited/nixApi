@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use App\User;
 use App\Cupo;
 use App\Eventos;
+use App\Prospectos;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -42,6 +43,12 @@ class EventosController extends Controller
         $evento = new Eventos($data);
         $evento->id_creador=$user["id"];
         $evento->save();
+        $prospecto= new Prospectos();
+        $prospecto->estado='creador';
+        $prospecto->confirmacionasistencia='0';
+        $prospecto->id_evento=$evento["id"];
+        $prospecto->id_prospecto=$user["id"];
+        $prospecto->save();
         return response()->json([
                     'eventos' => $evento], 201);
     }
@@ -126,9 +133,20 @@ class EventosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function getSpecificEvent(Request $request)
     {
-        //
+        $data = json_decode($request->getContent(), true);
+        $separar=$request->input('nombre_evento');
+        $evento = DB::table('eventos')
+                        ->select('eventos.*')
+                        ->where('id', $request->input('id'))
+                        ->get();
+        $imagen = DB::table('eventos')
+                        ->join('imageneventos', 'imageneventos.id_evento', '=', 'eventos.id')
+                        ->select('imageneventos.imagen')
+                        ->where('eventos.id', $request->input('id'))
+                        ->get();
+        return response()->json(['eventos'=>$evento,'imageneventos'=>$imagen]);
     }
 
     /**
