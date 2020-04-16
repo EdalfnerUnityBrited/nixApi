@@ -136,11 +136,10 @@ class EventosController extends Controller
     public function getSpecificEvent(Request $request)
     {
         $data = json_decode($request->getContent(), true);
-        $separar=$request->input('nombre_evento');
         $evento = DB::table('eventos')
                         ->select('eventos.*')
-                        ->where('id', $request->input('nombre_evento'))
-                        ->get();
+                        ->where('nombre_evento', $request->input('nombre_evento'))
+                        ->first();
         $imagen = DB::table('eventos')
                         ->join('imageneventos', 'imageneventos.id_evento', '=', 'eventos.id')
                         ->select('imageneventos.imagen')
