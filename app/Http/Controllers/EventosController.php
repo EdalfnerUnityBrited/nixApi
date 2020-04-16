@@ -143,7 +143,7 @@ class EventosController extends Controller
         $imagen = DB::table('eventos')
                         ->join('imageneventos', 'imageneventos.id_evento', '=', 'eventos.id')
                         ->select('imageneventos.imagen')
-                        ->where('eventos.id', $request->input('id'))
+                        ->where('eventos.id', $evento->id)
                         ->get();
         return response()->json(['eventos'=>$evento,'imageneventos'=>$imagen]);
     }
