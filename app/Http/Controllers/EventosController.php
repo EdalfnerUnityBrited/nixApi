@@ -140,7 +140,7 @@ class EventosController extends Controller
         $evento = DB::table('eventos')
                         ->select('eventos.*')
                         ->where('id', $request->input('id'))
-                        ->get();
+                        ->first();
         $imagen = DB::table('eventos')
                         ->join('imageneventos', 'imageneventos.id_evento', '=', 'eventos.id')
                         ->select('imageneventos.imagen')
