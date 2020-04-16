@@ -118,7 +118,7 @@ class EventosController extends Controller
         $evento = DB::table('eventos')
                         ->select('eventos.*')
                         ->where('nombre_evento', 'like', '%'.$separar.'%')
-                        ->get();
+                        ->first();
 
         
         //return response()->json(['eventos'=>$separar[1]]);  
