@@ -145,7 +145,7 @@ class EventosController extends Controller
                         ->select('imageneventos.imagen')
                         ->where('eventos.id', $evento->id)
                         ->get();
-        return response()->json(['eventos'=>$evento,'imageneventos'=>$imagen]);
+        return response()->json(['eventos'=>$evento,'imagenEventos'=>$imagen]);
     }
 
     /**
