@@ -139,8 +139,8 @@ class EventosController extends Controller
         $separar=$request->input('nombre_evento');
         $evento = DB::table('eventos')
                         ->select('eventos.*')
-                        ->where('id', $request->input('id'))
-                        ->first();
+                        ->where('id', $request->input('nombre_evento'))
+                        ->get();
         $imagen = DB::table('eventos')
                         ->join('imageneventos', 'imageneventos.id_evento', '=', 'eventos.id')
                         ->select('imageneventos.imagen')
