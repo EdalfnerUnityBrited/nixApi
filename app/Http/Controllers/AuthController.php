@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
-\Stripe\Stripe::setApiKey('sk_test_lgYrugTcHha9gdxBIXSc05a4004cPujRfI');
 
 class AuthController extends Controller
 {
@@ -111,9 +110,8 @@ class AuthController extends Controller
     public function payment(Request $request){
 
 
-        $user->$request->user();
-        //$payment_method = \Stripe\PaymentMethod::retrieve('{{'$request->input('paymentMethodId')'}}');
-        //$payment_method->attach(['customer' => '{{'$user["stripe_id"]'}}']);
+        $user=$request->user();
+        $user->addPaymentMethod($request->input('paymentMethodId'));
         return response()->json(['message'=>'Successfully added card!']);
     
     }
