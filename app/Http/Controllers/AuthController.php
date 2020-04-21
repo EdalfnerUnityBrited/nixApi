@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+\Stripe\Stripe::setApiKey('sk_test_lgYrugTcHha9gdxBIXSc05a4004cPujRfI');
 
 class AuthController extends Controller
 {
@@ -22,7 +23,7 @@ class AuthController extends Controller
 
         $user = new User($data);
         $user->password = Hash::make($user->password);
-        $user->save();
+        $user->createAsStripeCustomer();
         return response()->json([
                     'message' => 'Successfully created user!'], 201);
     }
@@ -106,5 +107,14 @@ class AuthController extends Controller
          $user->password = Hash::make($user->password);
          $user->save();
          return response()->json(['message'=>'Successfully updated password']);
+    }
+    public function payment(Request $request){
+
+
+        $user->$request->user();
+        $payment_method = \Stripe\PaymentMethod::retrieve('{{'$request->input('paymentMethodId')'}}');
+        $payment_method->attach(['customer' => '{{'$user["stripe_id"]'}}']);
+        return response()->json(['message'=>'Successfully added card!']);
+    ])
     }
 }
