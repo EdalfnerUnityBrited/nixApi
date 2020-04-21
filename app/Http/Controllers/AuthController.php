@@ -112,8 +112,8 @@ class AuthController extends Controller
 
 
         $user->$request->user();
-        $payment_method = \Stripe\PaymentMethod::retrieve('{{'$request->input('paymentMethodId')'}}');
-        $payment_method->attach(['customer' => '{{'$user["stripe_id"]'}}']);
+        //$payment_method = \Stripe\PaymentMethod::retrieve('{{'$request->input('paymentMethodId')'}}');
+        //$payment_method->attach(['customer' => '{{'$user["stripe_id"]'}}']);
         return response()->json(['message'=>'Successfully added card!']);
     ])
     }
