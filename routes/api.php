@@ -33,8 +33,8 @@ Route::group(['prefix' => 'auth'], function () {
 Route::group(['middleware' => 'auth:api'], function() {
 
 	Route::group(['prefix' => 'chats'], function () {
-		Route::get('', 'ChatsController@index');
-		Route::get('', 'ChatsController@proveedor');
+		Route::get('usuario', 'ChatsController@index');
+		Route::get('proveedor', 'ChatsController@proveedor');
 	    Route::post('', 'ChatsController@newchat');
 	    
 	    //Route::get('store', 'ChatsController@store');
