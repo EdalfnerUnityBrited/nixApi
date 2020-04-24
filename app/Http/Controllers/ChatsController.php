@@ -56,7 +56,7 @@ class ChatsController extends Controller
     {
         $user = $request->user();
        $chats =DB::table('chats')
-                ->join('users', 'chats.id_proveedor', '=', 'users.id')
+                ->join('users', 'chats.id_usuario', '=', 'users.id')
                 ->select('users.id','users.email', 'users.name')
                 ->where('id_proveedor', $user["id"])
                 ->get();
