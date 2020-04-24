@@ -52,7 +52,7 @@ class ChatsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function proveedor()
+    public function proveedor(Request $request)
     {
         $user = $request->user();
        $chats =DB::table('chats')
