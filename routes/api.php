@@ -34,6 +34,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 
 	Route::group(['prefix' => 'chats'], function () {
 		Route::get('', 'ChatsController@index');
+		Route::get('', 'ChatsController@proveedor');
 	    Route::post('', 'ChatsController@newchat');
 	    
 	    //Route::get('store', 'ChatsController@store');

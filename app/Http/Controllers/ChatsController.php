@@ -52,9 +52,17 @@ class ChatsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function proveedor()
     {
-        //
+        $user = $request->user();
+       $chats =DB::table('chats')
+                ->join('users', 'chats.id_proveedor', '=', 'users.id')
+                ->select('users.id','users.email', 'users.name')
+                ->where('id_proveedor', $user["id"])
+                ->get();
+
+
+        return response()->json(['chats'=>$chats]);
     }
 
     /**
