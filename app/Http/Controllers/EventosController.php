@@ -42,6 +42,7 @@ class EventosController extends Controller
         $user = $request->user();
         $evento = new Eventos($data);
         $evento->id_creador=$user["id"];
+        $evento->tendencia=0;
         $evento->save();
         $prospecto= new Prospectos();
         $prospecto->estado='creador';
