@@ -49,7 +49,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 	    Route::post('buscarEvento','EventosController@store');
 	    Route::post('evento','EventosController@getSpecificEvent');
 	    Route::get('asistencia','ProspectosController@getUserEvent');
-	    //Route::get('store', 'ChatsController@store');
+	    Route::post('asistir', 'ProspectosController@store');
 	});
 
 		Route::group(['prefix'=>'imagen'],function(){

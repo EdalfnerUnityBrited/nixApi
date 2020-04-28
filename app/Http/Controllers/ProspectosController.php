@@ -48,12 +48,38 @@ class ProspectosController extends Controller
     public function store(Request $request)
     {
         $data = json_decode($request->getContent(), true);
- 
+        $today=today();
         $user = $request->user();
         $prospectos = new Prospectos($data);
-        $prospectos->id_creador=$user["id"];
+        $prospectos->confirmacionasistencia=0;
+        $prospectos->id_prospecto=$user["id"];
         $prospectos->save();
-       return response()->json(['eventos'=>$eventos]);
+        $fecha=DB::table('eventos')
+        ->select('eventos.created_at')
+        ->where('eventos.id','=',$request->input('id_evento'))
+        ->first();
+        $prospect=DB::table('prospectos')
+        ->where('id_evento','=',$request->input('id_evento'))
+        ->count();
+        $cupo=DB::table('eventos')
+        ->where('eventos.id','=',$request->input('id_evento'))
+        ->pluck('eventos.cupo')
+        ->first();
+        $hola="no jala";
+        $created = new Carbon($fecha->created_at);
+        $now = Carbon::now();
+        $difference = ($created->diff($now)->days < 1)
+        ? 'today'
+        : $created->diffForHumans($now);
+        $asistentes=$prospect/$cupo;
+        if ($difference<30) {
+            if ($asistentes>0.6) {
+                DB::table('eventos')
+                    ->where('id','=',$request->input('id_evento') )
+                    ->update(['tendencia' => 1]);
+            }
+        }
+       return response()->json(['eventos'=>$asistentes]);
     }
 
     /**
