@@ -60,6 +60,7 @@ class ProspectosController extends Controller
         ->first();
         $prospect=DB::table('prospectos')
         ->where('id_evento','=',$request->input('id_evento'))
+        ->where('estado','=','confirmado')
         ->count();
         $cupo=DB::table('eventos')
         ->where('eventos.id','=',$request->input('id_evento'))
@@ -79,7 +80,7 @@ class ProspectosController extends Controller
                     ->update(['tendencia' => 1]);
             }
         }
-       return response()->json(['eventos'=>$asistentes]);
+       return response()->json(['eventos'=>$prospect]);
     }
 
     /**
