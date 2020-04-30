@@ -65,11 +65,21 @@ class ProspectosController extends Controller
             $mensaje="Registrado correctamente";
         }
         else if($pros->estado!=$request->input('estado')){
-            DB::table('prospectos')
+            if ($request->input('estado')=='cancelar') {
+                DB::table('prospectos')
+                ->where('id_evento','=',$request->input('id_evento') )
+                ->where('id_prospecto','=',$user["id"])
+                ->delete();
+                $mensaje="Borrado correctamente";
+            }
+            else{
+                 DB::table('prospectos')
                     ->where('id_evento','=',$request->input('id_evento') )
                     ->where('id_prospecto','=',$user["id"])
                     ->update(['prospectos.estado' => $request->input('estado')]);
                     $mensaje="Actualizado correctamente";
+            }
+           
         }
 
         $fecha=DB::table('eventos')
