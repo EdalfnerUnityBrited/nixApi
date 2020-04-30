@@ -117,9 +117,15 @@ class ProspectosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function confAsis(Request $request)
     {
-        //
+        $user = $request->user();
+        $pros=DB::table('prospectos')
+        ->select('prospectos.*')
+        ->where('id_prospecto','=',$user["id"])
+        ->where('id_evento','=',$request->input('id_evento'))
+        ->first();
+         return response()->json(['prospectos'=>$pros]);
     }
 
     /**
