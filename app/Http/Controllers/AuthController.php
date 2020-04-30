@@ -22,6 +22,7 @@ class AuthController extends Controller
 
         $user = new User($data);
         $user->password = Hash::make($user->password);
+        $user->fotoPerfil="https://i.pinimg.com/originals/c7/ea/97/c7ea97eebcc9ae38ca27939a34713ff0.jpg";
         $user->createAsStripeCustomer();
         return response()->json([
                     'message' => 'Successfully created user!'], 201);
