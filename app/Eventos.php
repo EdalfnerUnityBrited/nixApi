@@ -20,7 +20,9 @@ class Eventos extends Model
         'descripcion',
         'cupo',
         'cover',
-        'fotoPrincipal'
+        'fotoPrincipal',
+        'municipio',
+        'created_at'
     ];
 
     public function scopeNombre_evento($query, $nombre_evento)

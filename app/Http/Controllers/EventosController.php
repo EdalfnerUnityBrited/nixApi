@@ -38,11 +38,12 @@ class EventosController extends Controller
     public function newevento(Request $request)
     {
         $data = json_decode($request->getContent(), true);
- 
+ 		$now = Carbon::now();
         $user = $request->user();
         $evento = new Eventos($data);
         $evento->id_creador=$user["id"];
         $evento->tendencia=0;
+        $evento->created_at= $now;
         $evento->save();
         $prospecto= new Prospectos();
         $prospecto->estado='creador';

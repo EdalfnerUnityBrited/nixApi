@@ -50,10 +50,28 @@ class ProspectosController extends Controller
         $data = json_decode($request->getContent(), true);
         $today=today();
         $user = $request->user();
-        $prospectos = new Prospectos($data);
-        $prospectos->confirmacionasistencia=0;
-        $prospectos->id_prospecto=$user["id"];
-        $prospectos->save();
+        $pros=DB::table('prospectos')
+        ->select('prospectos.estado')
+        ->where('id_prospecto','=',$user["id"])
+        ->where('id_evento','=',$request->input('id_evento'))
+        ->first();
+        $mensaje="Ya estas registrado";
+        if(is_null($pros)){
+
+            $prospectos = new Prospectos($data);
+            $prospectos->confirmacionasistencia=0;
+            $prospectos->id_prospecto=$user["id"];
+            $prospectos->save();
+            $mensaje="Registrado correctamente";
+        }
+        else if($pros->estado!=$request->input('estado')){
+            DB::table('prospectos')
+                    ->where('id_evento','=',$request->input('id_evento') )
+                    ->where('id_prospecto','=',$user["id"])
+                    ->update(['prospectos.estado' => $request->input('estado')]);
+                    $mensaje="Actualizado correctamente";
+        }
+
         $fecha=DB::table('eventos')
         ->select('eventos.created_at')
         ->where('eventos.id','=',$request->input('id_evento'))
@@ -66,7 +84,7 @@ class ProspectosController extends Controller
         ->where('eventos.id','=',$request->input('id_evento'))
         ->pluck('eventos.cupo')
         ->first();
-        $hola="no jala";
+        
         $created = new Carbon($fecha->created_at);
         $now = Carbon::now();
         $difference = ($created->diff($now)->days < 1)
@@ -80,7 +98,7 @@ class ProspectosController extends Controller
                     ->update(['tendencia' => 1]);
             }
         }
-       return response()->json(['eventos'=>$prospect]);
+       return response()->json([$mensaje]);
     }
 
     /**
