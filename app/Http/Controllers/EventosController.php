@@ -102,9 +102,17 @@ class EventosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function asistencia(Request $request)
+    public function tendencia(Request $request)
     {
-        
+    	$now = Carbon::now();
+       $evento = DB::table('eventos')
+                        ->select('eventos.*')
+                        ->where('tendencia', '=', '1')
+                        ->where('fecha','>',$now)
+                        ->orderBy('fecha', 'asc')
+                        ->get();
+
+                return response()->json(['eventos'=>$evento]);
     }
 
     /**

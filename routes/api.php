@@ -51,6 +51,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 	    Route::get('asistencia','ProspectosController@getUserEvent');
 	    Route::post('asistir', 'ProspectosController@store');
 	    Route::post('ir','ProspectosController@confAsis');
+	    Route::get('tendencia','EventosController@tendencia');
 	});
 
 		Route::group(['prefix'=>'imagen'],function(){
