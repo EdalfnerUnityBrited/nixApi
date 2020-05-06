@@ -170,6 +170,9 @@ class EventosController extends Controller
         $evento =DB::table('eventos')
                 ->where('id','=', $request->input('id'))
                 ->delete();
+        $prospecto= DB::table('prospectos')
+        		->where('id_evento','=',$request->input('id'))
+        		->delete();
                 return response()->json(['eventos'=>"Event deleted succesfully!"]);   
     }
 }
