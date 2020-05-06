@@ -50,17 +50,17 @@ class Eventos extends Model
             public function scopeLugar($query, $lugar)
     {
     	if($lugar)
-    		return $query->orWhere('lugar','LIKE','%'.$lugar.'%');
+    		return $query->orWhere('municipio','LIKE','%'.$lugar.'%');
     }
             public function scopeFecha($query, $fecha)
     {
-    	if($fecha)
-    		return $query->Where('fecha','LIKE','%'.$fecha.'%');
+    	if($fechaInicio)
+    		return $query->orWhere('fecha','>',$fechaInicio);
     }
-            public function scopeHora($query, $hora)
-    {
-    	if($hora)
-    		return $query->orWhere('hora','LIKE','%'.$hora.'%');
-    }
+     {
+        if($fechaFinal)
+            return $query->orWhere('fecha','<',$fechaFinal);
+    }      
+    
 }
 

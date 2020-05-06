@@ -75,13 +75,13 @@ class EventosController extends Controller
      */
     public function store(Request $request)
     {
-        $nombre_evento    = $request->get('nombre_evento');
-        $categoria_evento = $request->get('categoria_evento');
+        $nombre_evento    = $request->get('nombre');
+        $categoria_evento = $request->get('categoria');
         $cover = $request->get('cover');
-        $lugar = $request->get('lugar');
-        $fecha = $request->get('fecha');
+        $lugar = $request->get('municipio');
+        $fechaInicio = $request->get('fechaIni');
         $cupo = $request->get('cupo');
-        $hora = $request->get('hora');
+        $fechaFinal = $request->get('fechaFin');
 
         $eventos = Eventos::orderBy('id','DESC')
         ->nombre_evento($nombre_evento)
