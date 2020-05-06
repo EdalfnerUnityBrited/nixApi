@@ -52,12 +52,12 @@ class Eventos extends Model
     	if($lugar)
     		return $query->orWhere('municipio','LIKE','%'.$lugar.'%');
     }
-            public function scopeFechaInicio($query, $fecha)
+            public function scopeFechaInicio($query, $fechaInicio)
     {
     	if($fechaInicio)
     		return $query->orWhere('fecha','>',$fechaInicio);
     }
-    public function scopeFechaFinal($query, $fecha)
+        public function scopeFechaFinal($query, $fechaFinal)
      {
         if($fechaFinal)
             return $query->orWhere('fecha','<',$fechaFinal);

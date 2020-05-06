@@ -88,9 +88,9 @@ class EventosController extends Controller
         ->categoria_evento($categoria_evento)
         ->cover($cover)
         ->lugar($lugar)
-        ->fecha($fecha)
+        ->fechaInicio($fechaInicio)
+        ->fechaFinal($fechaFinal)
         ->cupo($cupo)
-        ->hora($hora)
         ->get();
 
         return response()->json(['eventos'=>$eventos]);
