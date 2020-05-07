@@ -35,20 +35,20 @@ class Eventos extends Model
         public function scopeCategoria_evento($query, $categoria_evento)
     {
     	if($categoria_evento)
-    		return $query->Where('categoria_evento','LIKE','%'.$categoria_evento.'%')
+    		return $query->orWhere('categoria_evento','LIKE','%'.$categoria_evento.'%')
         ->Where('privacidad','=',"0");
     }
 
             public function scopeCover($query, $cover)
     {
     	if($cover)
-    		return $query->Where('cover','<',$cover)
+    		return $query->orWhere('cover','<',$cover)
         ->Where('privacidad','=',"0");
     }
             public function scopeCupo($query, $cupo)
     {
     	if($cupo)
-    		return $query->Where('cupo','<',$cupo)
+    		return $query->orWhere('cupo','<',$cupo)
         ->Where('privacidad','=',"0");
     }
             public function scopeLugar($query, $lugar)
