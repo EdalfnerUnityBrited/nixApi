@@ -174,4 +174,21 @@ class EventosController extends Controller
         		->delete();
                 return response()->json(['eventos'=>"Event deleted succesfully!"]);   
     }
+    public function cupo(Request $request)
+    {
+    	$data= json_decode($request->getContent(), true);
+    	$prospect=DB::table('prospectos')
+        ->where('id_evento','=',$request->input('id'))
+        ->where('estado','=','confirmado')
+        ->count();
+    	$cupo=DB::table('eventos')
+        ->where('eventos.id','=',$request->input('id'))
+        ->pluck('eventos.cupo')
+        ->first();
+        $categoria='0';
+        if ($prospect<$cupo) {
+        	$categoria='1';
+        }
+        return response()->json([$categoria]);
+    }
 }
