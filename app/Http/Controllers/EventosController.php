@@ -185,10 +185,10 @@ class EventosController extends Controller
         ->where('eventos.id','=',$request->input('nombre_evento'))
         ->pluck('eventos.cupo')
         ->first();
-        $categoria='0';
+        $text='0';
         if ($prospect<$cupo) {
         	$categoria='1';
         }
-        return response()->json([$categoria]);
+        return response()->json(['mensaje'=>$text]);
     }
 }
