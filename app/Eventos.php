@@ -62,7 +62,8 @@ class Eventos extends Model
     	if($fechaInicio){
     		return $query->Where('fecha','>',$fechaInicio)
                     ->Where('fecha','<',$fechaFinal)
-                    ->Where('privacidad','=',"0");
+                    ->Where('privacidad','=',"0")
+                    ->get();
         }
 
     }
