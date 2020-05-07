@@ -28,7 +28,7 @@ class Eventos extends Model
     public function scopeNombre_evento($query, $nombre_evento)
     {
     	if($nombre_evento)
-    		return $query->Where('nombre_evento', 'LIKE', '%'.$nombre_evento.'%')
+    		return $query->orWhere('nombre_evento', 'LIKE', '%'.$nombre_evento.'%')
         ->Where('privacidad','=',"0");
     }
 
@@ -62,8 +62,7 @@ class Eventos extends Model
     	if($fechaInicio){
     		return $query->Where('fecha','>',$fechaInicio)
                     ->Where('fecha','<',$fechaFinal)
-                    ->Where('privacidad','=',"0")
-                    ->get();
+                    ->Where('privacidad','=',"0");
         }
 
     }
