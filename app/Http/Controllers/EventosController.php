@@ -193,6 +193,6 @@ class EventosController extends Controller
         if ($prospect<$cupo) {
         	$text->id_evento='1';
         }
-        return response()->json(['mensaje'=>$text]);
+        return response()->json(['RespuestaEventoLleno'=>$text]);
     }
 }
