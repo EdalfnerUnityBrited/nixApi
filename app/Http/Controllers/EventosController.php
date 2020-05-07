@@ -185,9 +185,13 @@ class EventosController extends Controller
         ->where('eventos.id','=',$request->input('nombre_evento'))
         ->pluck('eventos.cupo')
         ->first();
-        $text='0';
+        $text=DB::table('prospectos')
+        	->select('id_evento')
+        	->where('id_evento','=',$request->input('nombre_evento'))
+        	->first();
+        $text->id_evento='0';
         if ($prospect<$cupo) {
-        	$categoria='1';
+        	$text->id_evento='1';
         }
         return response()->json(['mensaje'=>$text]);
     }
