@@ -88,8 +88,7 @@ class EventosController extends Controller
         ->categoria_evento($categoria_evento)
         ->cover($cover)
         ->lugar($lugar)
-        ->fechaInicio($fechaInicio)
-        ->fechaFinal($fechaFinal)
+        ->fechaInicio($fechaInicio, $fechaFinal)
         ->cupo($cupo)
         ->get();
 
