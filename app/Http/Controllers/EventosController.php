@@ -178,11 +178,11 @@ class EventosController extends Controller
     {
     	$data= json_decode($request->getContent(), true);
     	$prospect=DB::table('prospectos')
-        ->where('id_evento','=',$request->input('id'))
+        ->where('id_evento','=',$request->input('nombre_evento'))
         ->where('estado','=','confirmado')
         ->count();
     	$cupo=DB::table('eventos')
-        ->where('eventos.id','=',$request->input('id'))
+        ->where('eventos.id','=',$request->input('nombre_evento'))
         ->pluck('eventos.cupo')
         ->first();
         $categoria='0';
