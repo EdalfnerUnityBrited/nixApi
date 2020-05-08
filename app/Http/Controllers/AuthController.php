@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -115,5 +116,12 @@ class AuthController extends Controller
         $user->addPaymentMethod($request->input('paymentMethodId'));
         return response()->json(['message'=>'Successfully added card!']);
     
+    }
+    public function existeciaCuenta(Request $request){
+        $user=DB::table('users')
+        ->select('users.*')
+        ->where('users.email','=',$request->input('email'))
+        ->first();
+         return response()->json(['usuario'=>$user]);   
     }
 }
