@@ -29,6 +29,22 @@ class AuthController extends Controller
                     'message' => 'Successfully created user!'], 201);
     }
 
+    public function signupFG(Request $request) {
+        $data = json_decode($request->getContent(), true);
+        
+        Validator::make($data, [
+            'name'     => 'required|string',
+            'email'    => 'required|string|email|unique:App\User',
+            'password' => 'required|string|confirmed',
+        ])->validate();
+
+        $user = new User($data);
+        $user->password = Hash::make($user->password);
+        $user->createAsStripeCustomer();
+        return response()->json([
+                    'message' => 'Successfully created user!'], 201);
+    }
+
     public function login(Request $request) {
         $data = json_decode($request->getContent(), true);
         
