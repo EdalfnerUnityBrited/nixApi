@@ -120,7 +120,7 @@ class AuthController extends Controller
     public function existeciaCuenta(Request $request){
         $user=DB::table('users')
         ->select('users.*')
-        ->where('users.email','=',$request->input('email'))
+        ->where('users.email','=',$request->input('fotoPerfil'))
         ->first();
          return response()->json(['usuario'=>$user]);   
     }
