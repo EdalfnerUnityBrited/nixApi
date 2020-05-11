@@ -24,11 +24,12 @@ class EventosController extends Controller
     public function getUserEvents(Request $request)
     {
         $user =$request->user();
-
+$now = Carbon::now();
        $eventos =DB::table('eventos')
                 ->join('users', 'eventos.id_creador', '=', 'users.id')
                 ->select('eventos.*','users.telefono', 'users.name')
                 ->where('id_creador', $user["id"])
+                ->where('fecha','>',$now)
                 ->get();
                 return response()->json(['eventos'=>$eventos]);
     
