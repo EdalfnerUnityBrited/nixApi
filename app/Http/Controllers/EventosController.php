@@ -195,4 +195,10 @@ class EventosController extends Controller
         }
         return response()->json(['eventoLleno'=>$text]);
     }
+    public function searchId(Request $request){
+    	$evento=DB::table('eventos')
+    	->where('id','=', $request->input('cupo'))
+    	->first();
+    	return response()->json(['evento'=>$evento]);
+    }
 }
