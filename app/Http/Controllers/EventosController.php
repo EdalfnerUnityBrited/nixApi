@@ -199,6 +199,6 @@ class EventosController extends Controller
     	$evento=DB::table('eventos')
     	->where('id','=', $request->input('cupo'))
     	->first();
-    	return response()->json(['evento'=>$evento]);
+    	return response()->json(['eventos'=>$evento]);
     }
 }
