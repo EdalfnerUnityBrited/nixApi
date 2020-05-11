@@ -56,6 +56,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 	    Route::get('tendencia','EventosController@tendencia');
 	    Route::post('cupo','EventosController@cupo');
 	    Route::post('idEvento','EventosController@searchId');
+	    Route::post('actualizar','EventosController@actualizarEvento');
 	});
 
 		Route::group(['prefix'=>'imagen'],function(){

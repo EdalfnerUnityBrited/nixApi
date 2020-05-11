@@ -201,4 +201,22 @@ class EventosController extends Controller
     	->first();
     	return response()->json(['eventos'=>$evento]);
     }
+    public function actualizarEvento(Request $request){
+    	$data= json_decode($request->getContent(), true);
+    	$eventos=Eventos::find($request->input('id'));
+        $eventos->nombre_evento=$request->input('nombre_evento');
+        $eventos->privacidad=$request->input('privacidad');
+        $eventos->categoria_evento=$request->input('categoria_evento');
+        $eventos->fecha=$request->input('fecha');
+        $eventos->hora=$request->input('hora');
+        $eventos->lugar=$request->input('lugar');
+        $eventos->descripcion=$request->input('descripcion');
+        $eventos->cupo=$request->input('cupo');
+        $eventos->cover=$request->input('cover');
+        $eventos->fotoPrincipal=$request->input('fotoPrincipal');
+        $eventos->municipio=$request->input('municipio');
+    	
+    	$eventos->save();
+    	return response()->json(['eventos'=>"Event updated succesfully!"]);
+    }
 }
