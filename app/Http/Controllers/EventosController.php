@@ -62,8 +62,10 @@ $now = Carbon::now();
      */
     public function getAllEvents()
     {
+    	$now = Carbon::now();
          $eventos = DB::table('eventos')
          ->where('privacidad','0')
+         ->where('fecha','>',$now)
          ->get();
         return response()->json(['eventos'=>$eventos]);
     }
