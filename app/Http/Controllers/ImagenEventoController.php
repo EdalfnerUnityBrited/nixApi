@@ -38,7 +38,7 @@ class ImagenEventoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function addOne()
+    public function addOne(Request $request)
     {
         $data = json_decode($request->getContent(), true);
         $image= new Imageneventos($data);
