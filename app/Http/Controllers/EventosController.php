@@ -261,7 +261,7 @@ $now = Carbon::now();
     }
     public function getEventId(Request $request){
         $evento =DB::table('eventos')
-                ->where('id','=', $request->input('id'))
+                ->where('id','=', $request->input('cupo'))
                 ->first();
     return response()->json(['eventos' =>$evento]);  
     }
