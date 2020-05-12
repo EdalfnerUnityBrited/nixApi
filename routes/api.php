@@ -57,11 +57,14 @@ Route::group(['middleware' => 'auth:api'], function() {
 	    Route::post('cupo','EventosController@cupo');
 	    Route::post('idEvento','EventosController@searchId');
 	    Route::post('actualizar','EventosController@actualizarEvento');
+	    Route::post('invitar','EventosController@invitar');
 	});
 
 		Route::group(['prefix'=>'imagen'],function(){
 		Route::post('','ImagenEventoController@addImage');
 		});
-
+		Route::group(['prefix'=>'proveedor'],function(){
+		Route::post('cita','CitasController@agendarCita');
+		});
 
 });

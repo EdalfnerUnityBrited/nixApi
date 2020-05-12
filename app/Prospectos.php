@@ -12,7 +12,8 @@ class Prospectos extends Model
         'estado',
         'confirmacionasistencia',
         'id_evento',
-        'id_prospecto'
+        'id_prospecto',
+        'invited_at'
     ];
 
 

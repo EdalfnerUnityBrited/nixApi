@@ -222,4 +222,29 @@ $now = Carbon::now();
     	$eventos->save();
     	return response()->json(['eventos'=>"Event updated succesfully!"]);
     }
+    public function invitar(Request $request){
+
+    	$usuario=User::where('email',$request->input('email'))->first();
+    	if (is_null($usuario)) {
+    		return response()->json([
+                        'message' => 'No se encontró'], 404);
+    	}
+    	$eventos=Prospectos::where('id_evento','=',$request->input('id_evento'))
+    					->where('id_prospecto',$usuario["id"])
+    					->first();
+    	if (is_null($eventos)) {
+    							$now = Carbon::now();
+    	$prospecto=new Prospectos();
+    	$prospecto->estado='invitado';
+    	$prospecto->confirmacionasistencia=0;
+    	$prospecto->id_prospecto=$usuario["id"];
+    	$prospecto->id_evento=$request->input('id_evento');
+    	$prospecto->invited_at=$now;
+    	$prospecto->save();
+    	return response()->json(['message' => 'User added succesfully!']);
+    						}					
+    	return response()->json(['message' => 'User added unsuccesfully'],404);
+    	
+    }
+    
 }
