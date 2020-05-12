@@ -10,6 +10,7 @@ use App\Cupo;
 use App\Eventos;
 use App\Prospectos;
 use Carbon\Carbon;
+use App\Notificaciones;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -233,7 +234,10 @@ $now = Carbon::now();
     					->where('id_prospecto',$usuario["id"])
     					->first();
     	if (is_null($eventos)) {
-    							$now = Carbon::now();
+    		$evento=DB::table('eventos')
+                        ->where('id',$request->input('id_evento'))
+                        ->first();
+    			$now = Carbon::now();
     	$prospecto=new Prospectos();
     	$prospecto->estado='invitado';
     	$prospecto->confirmacionasistencia=0;
@@ -241,7 +245,16 @@ $now = Carbon::now();
     	$prospecto->id_evento=$request->input('id_evento');
     	$prospecto->invited_at=$now;
     	$prospecto->save();
+                        $notificaciones= new Notificaciones();
+                        $notificaciones->id_receptor=$usuario["id"];
+                        $notificaciones->id_evento=$request->input('id_evento');
+                        $notificaciones->fechaFin=$evento->fecha;
+                        $notificaciones->fechaInicio=$now;
+                        $notificaciones->contenido=("Has sido invitado al evento ".$evento->nombre_evento." el dia ".$evento->fecha."");
+                        $notificaciones->tipoNotificacion=2;
+                        $notificaciones->save();
     	return response()->json(['message' => 'User added succesfully!']);
+
     						}					
     	return response()->json(['message' => 'User added unsuccesfully'],404);
     	

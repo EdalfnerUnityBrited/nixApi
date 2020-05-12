@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Prospectos;
 use App\User;
 use Carbon\Carbon;
+use App\Notificaciones;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -49,12 +50,16 @@ class ProspectosController extends Controller
     {
         $data = json_decode($request->getContent(), true);
         $today=today();
+        $hola='';
         $user = $request->user();
         $pros=DB::table('prospectos')
         ->select('prospectos.estado')
         ->where('id_prospecto','=',$user["id"])
         ->where('id_evento','=',$request->input('id_evento'))
         ->first();
+        $evento=DB::table('eventos')
+                        ->where('id',$request->input('id_evento'))
+                        ->first();
         $mensaje="Ya estas registrado";
         if(is_null($pros)){
 
@@ -63,6 +68,17 @@ class ProspectosController extends Controller
             $prospectos->id_prospecto=$user["id"];
             $prospectos->save();
             $mensaje="Registrado correctamente";
+                    if($request->input('estado')=="confirmado"){
+                        $currentDate = new Carbon($evento->fecha);
+                        $notificaciones= new Notificaciones();
+                        $notificaciones->id_receptor=$user["id"];
+                        $notificaciones->id_evento=$request->input('id_evento');
+                        $notificaciones->fechaFin=$evento->fecha;
+                        $notificaciones->fechaInicio=$currentDate->subDays(3);
+                        $notificaciones->contenido=("No olvides que tienes el evento ".$evento->nombre_evento." el dia ".$evento->fecha."");
+                        $notificaciones->tipoNotificacion=1;
+                        $notificaciones->save();
+                    }
         }
         else if($pros->estado!=$request->input('estado')){
             if ($request->input('estado')=='cancelar') {
@@ -71,6 +87,10 @@ class ProspectosController extends Controller
                 ->where('id_prospecto','=',$user["id"])
                 ->delete();
                 $mensaje="Borrado correctamente";
+                DB::table('notificaciones')
+                        ->where('id_evento',$request->input('id_evento'))
+                        ->where('id_receptor','=',$user["id"])
+                        ->delete();
             }
             else{
                  DB::table('prospectos')
@@ -78,6 +98,24 @@ class ProspectosController extends Controller
                     ->where('id_prospecto','=',$user["id"])
                     ->update(['prospectos.estado' => $request->input('estado')]);
                     $mensaje="Actualizado correctamente";
+                    if ($request->input('estado')=='me interesa') {
+                        DB::table('notificaciones')
+                        ->where('id_evento',$request->input('id_evento'))
+                        ->where('id_receptor','=',$user["id"])
+                        ->delete();
+                    }
+                    else if($request->input('estado')=="confirmado"){
+                        $currentDate = new Carbon($evento->fecha);
+                        $notificaciones= new Notificaciones();
+                        $notificaciones->id_receptor=$user["id"];
+                        $notificaciones->id_evento=$request->input('id_evento');
+                        $notificaciones->fechaFin=$evento->fecha;
+                        $notificaciones->fechaInicio=$currentDate->subDays(3);
+                        $notificaciones->contenido=("No olvides que tienes el evento ".$evento->nombre_evento." el dia ".$evento->fecha."");
+                        $notificaciones->tipoNotificacion=1;
+                        $notificaciones->save();
+                    }
+                    
             }
            
         }
@@ -108,7 +146,7 @@ class ProspectosController extends Controller
                     ->update(['tendencia' => 1]);
             }
         }
-       return response()->json([$mensaje]);
+       return response()->json(['mensaje'=>$mensaje]);
     }
 
     /**
