@@ -225,7 +225,7 @@ $now = Carbon::now();
     }
     public function invitar(Request $request){
 
-    	$usuario=User::where('email',$request->input('email'))->first();
+    	$usuario=User::where('email',$request->input('cupo'))->first();
     	if (is_null($usuario)) {
     		return response()->json([
                         'message' => 'No se encontró'], 404);
@@ -235,19 +235,19 @@ $now = Carbon::now();
     					->first();
     	if (is_null($eventos)) {
     		$evento=DB::table('eventos')
-                        ->where('id',$request->input('id_evento'))
+                        ->where('id',$request->input('cover'))
                         ->first();
     			$now = Carbon::now();
     	$prospecto=new Prospectos();
     	$prospecto->estado='invitado';
     	$prospecto->confirmacionasistencia=0;
     	$prospecto->id_prospecto=$usuario["id"];
-    	$prospecto->id_evento=$request->input('id_evento');
+    	$prospecto->id_evento=$request->input('cover');
     	$prospecto->invited_at=$now;
     	$prospecto->save();
                         $notificaciones= new Notificaciones();
                         $notificaciones->id_receptor=$usuario["id"];
-                        $notificaciones->id_evento=$request->input('id_evento');
+                        $notificaciones->id_evento=$request->input('cover');
                         $notificaciones->fechaFin=$evento->fecha;
                         $notificaciones->fechaInicio=$now;
                         $notificaciones->contenido=("Has sido invitado al evento ".$evento->nombre_evento." el dia ".$evento->fecha."");
