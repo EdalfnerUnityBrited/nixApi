@@ -4,6 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use App\User;
+use App\Cupo;
+use App\Eventos;
+use App\Imageneventos;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class NotificacionesController extends Controller
 {
@@ -12,9 +21,17 @@ class NotificacionesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function getUser(Request $request)
     {
-        //
+        $now= Carbon::now();
+        $user= $request->user();
+        $notificaciones= DB::table('notificaciones')
+        ->where('fechaInicio','<',$now)
+        ->where('fechaFin','>',$now)
+        ->where('id_receptor',$user["id"])
+        ->get();
+        return response()->json(['notificaciones'=>$notificaciones]);
+
     }
 
     /**

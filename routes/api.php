@@ -58,6 +58,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 	    Route::post('idEvento','EventosController@searchId');
 	    Route::post('actualizar','EventosController@actualizarEvento');
 	    Route::post('invitar','EventosController@invitar');
+
 	});
 
 		Route::group(['prefix'=>'imagen'],function(){
@@ -68,5 +69,6 @@ Route::group(['middleware' => 'auth:api'], function() {
 		Route::group(['prefix'=>'proveedor'],function(){
 		Route::post('cita','CitasController@agendarCita');
 		});
+		Route::get('notificaciones','NotificacionesController@getUser');
 
 });
