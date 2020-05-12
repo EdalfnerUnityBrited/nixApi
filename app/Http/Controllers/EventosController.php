@@ -230,7 +230,7 @@ $now = Carbon::now();
     		return response()->json([
                         'message' => 'No se encontró'], 404);
     	}
-    	$eventos=Prospectos::where('id_evento','=',$request->input('id_evento'))
+    	$eventos=Prospectos::where('id_evento','=',$request->input('cover'))
     					->where('id_prospecto',$usuario["id"])
     					->first();
     	if (is_null($eventos)) {
@@ -253,7 +253,7 @@ $now = Carbon::now();
                         $notificaciones->contenido=("Has sido invitado al evento ".$evento->nombre_evento." el dia ".$evento->fecha."");
                         $notificaciones->tipoNotificacion=2;
                         $notificaciones->save();
-    	return response()->json(['message' => 'User added succesfully!']);
+    	return response()->json(['message' => 'User added succesfully']);
 
     						}					
     	return response()->json(['message' => 'User added unsuccesfully'],404);
