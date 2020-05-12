@@ -38,9 +38,12 @@ class ImagenEventoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function addOne()
     {
-        //
+        $data = json_decode($request->getContent(), true);
+        $image= new Imageneventos($data);
+        $image->save();
+        return response()->json(['message'=>'Successfully added photos'], 201);
     }
 
     /**
