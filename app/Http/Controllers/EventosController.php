@@ -259,5 +259,11 @@ $now = Carbon::now();
     	return response()->json(['message' => 'User added unsuccesfully'],404);
     	
     }
+    public function getEventId(Request $request){
+        $evento =DB::table('eventos')
+                ->where('id','=', $request->input('id'))
+                ->first();
+    return response()->json(['eventos' =>$evento]);  
+    }
     
 }
