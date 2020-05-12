@@ -52,9 +52,13 @@ class ImagenEventoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function eraseImage(Request $request)
     {
-        //
+        DB::table('imageneventos')
+        ->where('imagen', '=', $request->input('imagen'))
+        ->delete();
+        return response()->json(['message'=>'Successfully erased photos'], 201);
+    
     }
 
     /**
