@@ -270,18 +270,18 @@ $now = Carbon::now();
         $usuario =DB::table('eventos')
                 ->join('users', 'eventos.id_creador', '=', 'users.id')
                 ->select('users.*')
-                ->where('eventos.id', $request->input('id'))
+                ->where('eventos.id', $request->input('nombre_evento'))
                 ->first();
-                 return response()->json(['eventos' =>$usuario]);
+                 return response()->json(['usuario' =>$usuario]);
     }
     public function getInvitedUsers(Request $request){
                 $usuarios =DB::table('prospectos')
                 ->join('eventos', 'eventos.id', '=', 'prospectos.id_evento')
                 ->join('users', 'users.id', '=', 'prospectos.id_prospecto')
                 ->select('users.*')
-                ->where('eventos.id', $request->input('id'))
+                ->where('eventos.id', $request->input('nombre_evento'))
                 ->where('prospectos.estado','confirmado')
                 ->get();
-                return response()->json(['eventos' =>$usuarios]);
+                return response()->json(['usuarios' =>$usuarios]);
     }
 }
