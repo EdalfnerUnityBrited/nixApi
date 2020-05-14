@@ -59,6 +59,8 @@ Route::group(['middleware' => 'auth:api'], function() {
 	    Route::post('actualizar','EventosController@actualizarEvento');
 	    Route::post('invitar','EventosController@invitar');
 	    Route::post('id','EventosController@getEventId');
+	    Route::post('invitados','EventosController@getInvitedUsers');
+	    Route::post('creador','EventosController@getUserData');
 	});
 
 		Route::group(['prefix'=>'imagen'],function(){
