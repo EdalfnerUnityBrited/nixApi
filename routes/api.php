@@ -70,6 +70,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 		});
 		Route::group(['prefix'=>'proveedor'],function(){
 		Route::post('cita','CitasController@agendarCita');
+		Route::post('nuevoServicio','CatalogoServicioController@newService');
 		});
 		Route::get('notificaciones','NotificacionesController@getUser');
 

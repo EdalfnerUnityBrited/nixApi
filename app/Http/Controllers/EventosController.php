@@ -281,6 +281,7 @@ $now = Carbon::now();
                 ->select('users.*')
                 ->where('eventos.id', $request->input('nombre_evento'))
                 ->where('prospectos.estado','confirmado')
+                ->orderBy('users.name','ASC')
                 ->get();
                 return response()->json(['usuarios' =>$usuarios]);
     }
