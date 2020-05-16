@@ -68,7 +68,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 		Route::post('unaImagen','ImagenEventoController@addOne');
 		Route::post('erase','ImagenEventoController@eraseImage');
 		Route::post('articulo','ImagenArticuloController@addImages');
-		Route::post('paquete','ImagenPaqueteController@addImages')
+		Route::post('paquete','ImagenPaqueteController@addImages');
 		});
 		Route::group(['prefix'=>'proveedor'],function(){
 		Route::post('cita','CitasController@agendarCita');

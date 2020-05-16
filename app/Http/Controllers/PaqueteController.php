@@ -4,7 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\User;
+use App\Cupo;
+use App\Eventos;
+use App\Imagenpaquete;
+use Carbon\Carbon;
+use App\Paquete;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 class PaqueteController extends Controller
 {
     /**
@@ -16,9 +24,7 @@ class PaqueteController extends Controller
     {
         $data = json_decode($request->getContent(), true);
         $user= $request->user();
-        $servicio= new CatalogoServicio($data);
-        $servicio->calificacion=5;
-        $servicio->id_usuario=$user["id"];
+        $servicio= new Paquete($data);
         $servicio->save();
         return response()->json([
                     'message' => 'Service created succesfuly'], 201);
