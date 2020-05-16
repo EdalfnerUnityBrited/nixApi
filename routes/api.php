@@ -67,10 +67,15 @@ Route::group(['middleware' => 'auth:api'], function() {
 		Route::post('','ImagenEventoController@addImage');
 		Route::post('unaImagen','ImagenEventoController@addOne');
 		Route::post('erase','ImagenEventoController@eraseImage');
+		Route::post('articulo','ImagenArticuloController@addImages');
+		Route::post('paquete','ImagenPaqueteController@addImages')
 		});
 		Route::group(['prefix'=>'proveedor'],function(){
 		Route::post('cita','CitasController@agendarCita');
 		Route::post('nuevoServicio','CatalogoServicioController@newService');
+		Route::post('articulo','ArticuloController@crearArticulo');
+		Route::post('paquete','PaqueteController@addPaquete');
+
 		});
 		Route::get('notificaciones','NotificacionesController@getUser');
 
