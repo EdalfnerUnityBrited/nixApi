@@ -131,7 +131,7 @@ class AuthController extends Controller
 
         $user=$request->user();
         $user->addPaymentMethod($request->input('paymentMethodId'));
-        $stripeCharge = $user->charge(100.00, $request->input('paymentMethodId'));
+        $stripeCharge = $user->charge(10000, $request->input('paymentMethodId'));
         return response()->json(['message'=>'Successfully added card!']);
     
     }
