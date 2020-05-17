@@ -151,7 +151,7 @@ class AuthController extends Controller
 		} catch (Exception $e) {
     	return response()->json(['message'=>$e]);
 		}
-    	return response()->json(['message'=>'$paymentMethod']);
+    	return response()->json(['message'=>'Hola']);
 		}
     	
     	return response()->json(['message'=>'No tienes metodos']);
