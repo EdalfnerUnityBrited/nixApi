@@ -143,7 +143,7 @@ class AuthController extends Controller
     }
     public function retrievePayment(Request $request){
     	$user=$request->user();
-    	$paymentMethods = $user->paymentMethods();
-    	return response()->json(['message'=>$paymentMethods]);
+    	$paymentMethod = $user->defaultPaymentMethod();
+    	return response()->json(['message'=>$paymentMethod]);
     }
 }
