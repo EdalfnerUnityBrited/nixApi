@@ -150,7 +150,7 @@ class AuthController extends Controller
     	$stripeCharge = $user->charge(100, $paymentMethod);
 
 
-    	return response()->json(['message'=>'$paymentMethods[0]->]');
+    	return response()->json(['message'=>'OK']);
 		}
     	
     	return response()->json(['message'=>'No tienes metodos']);
