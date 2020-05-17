@@ -130,6 +130,7 @@ class AuthController extends Controller
 
         $user=$request->user();
         $user->addPaymentMethod($request->input('paymentMethodId'));
+        $user->updateDefaultPaymentMethod($request->input('paymentMethodId'));
         return response()->json(['message'=>'Successfully added card!']);
     
     }
