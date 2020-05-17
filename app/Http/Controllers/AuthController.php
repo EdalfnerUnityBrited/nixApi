@@ -146,8 +146,7 @@ class AuthController extends Controller
     public function retrievePayment(Request $request){
     	$user=$request->user();
     	if ($user->hasPaymentMethod()) {
-    	$paymentMethod = $user->defaultPaymentMethod();
-    	$stripeCharge = $user->charge(100, $paymentMethod);
+    	$stripeCharge = $user->charge(100, $user->paymentMethods()[0]);
 
 
     	return response()->json(['message'=>'OK']);
