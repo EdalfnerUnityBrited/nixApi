@@ -148,7 +148,9 @@ class AuthController extends Controller
     	$user=$request->user();
     	if ($user->hasPaymentMethod()) {
     	$paymentMethod = $user->defaultPaymentMethod();
-    	$stripeCharge = $user->charge(100, $paymentMethod);
+    	$user->charge(100, $paymentMethod, [
+    'custom_option' => 'Pago prueba',
+]);
     	return response()->json(['message'=>'Hola']);
 		}
     	
