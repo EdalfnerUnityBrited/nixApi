@@ -28,6 +28,7 @@ Route::group(['prefix' => 'auth'], function () {
         Route::put('user', 'AuthController@cambioDatos');
         Route::put('password', 'AuthController@cambioContrasena');
         Route::post('pagar','AuthController@payment');
+        Route::post('retrieve','AuthController@retrievePayment');
     });
 
 });
