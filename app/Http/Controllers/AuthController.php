@@ -146,7 +146,12 @@ class AuthController extends Controller
     	$user=$request->user();
     	if ($user->hasPaymentMethod()) {
     	$paymentMethod = $user->defaultPaymentMethod();
-    	return response()->json(['message'=>$paymentMethod]);
+    	try {
+    	$payment = $user->charge(100, $paymentMethod);
+		} catch (Exception $e) {
+    	return response()->json(['message'=>$e]);
+		}
+    	return response()->json(['message'=>'$paymentMethod']);
 		}
     	
     	return response()->json(['message'=>'No tienes metodos']);
