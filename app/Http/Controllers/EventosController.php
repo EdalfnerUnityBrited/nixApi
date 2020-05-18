@@ -179,7 +179,7 @@ $now = Carbon::now();
         $prospecto= DB::table('prospectos')
         		->where('id_evento','=',$request->input('id'))
         		->delete();
-        App\Flight::where('id_evento', $request->input('id'))
+        App\Notificaciones::where('id_evento', $request->input('id'))
                         ->update(['estado' => "El evento ".$evento->nombre_evento." ha sido eliminado"]);
                 return response()->json(['eventos'=>"Event deleted succesfully!"]);   
     }
