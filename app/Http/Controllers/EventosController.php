@@ -169,18 +169,21 @@ $now = Carbon::now();
      */
     public function destroy(Request $request)
     { 
+        $now= Carbon::now();
         $data = json_decode($request->getContent(), true);
-        $evento =DB::table('eventos')
-                ->where('id','=', $request->input('id'))
-                ->delete();
         $eventos =DB::table('eventos')
                 ->where('id','=', $request->input('id'))
                 ->first();
+        $evento =DB::table('eventos')
+                ->where('id','=', $request->input('id'))
+                ->delete();
         $prospecto= DB::table('prospectos')
         		->where('id_evento','=',$request->input('id'))
         		->delete();
-        App\Notificaciones::where('id_evento', $request->input('id'))
-                        ->update(['estado' => "El evento ".$evento->nombre_evento." ha sido eliminado"]);
+        Notificaciones::where('id_evento', $request->input('id'))
+                        ->update(['contenido' => "El evento ".$eventos->nombre_evento." ha sido eliminado"]);
+        Notificaciones::where('id_evento', $request->input('id'))
+                        ->update(['fechaInicio' => $now]);
                 return response()->json(['eventos'=>"Event deleted succesfully!"]);   
     }
     public function cupo(Request $request)
