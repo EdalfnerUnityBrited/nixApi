@@ -15,4 +15,19 @@ class Paquete extends Model
         'fotoPaquete',
         'id_servicio'
     ];
+    public function scopeNombre($query, $nombre)
+    {
+    	if($nombre)
+    		return $query->orWhere('nombre', 'LIKE', '%'.$nombre.'%'));
+    }
+    public function scopePrecio($query, $precioInicio, $precioFin)
+    {
+    	if($precioInicio)
+    		return $query->Where('precio','<',$precio)
+    					->Where('precio','>',$precioFin);
+
+    }
+   
+
+
 }

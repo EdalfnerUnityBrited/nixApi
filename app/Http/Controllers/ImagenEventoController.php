@@ -17,7 +17,8 @@ use Illuminate\Support\Facades\DB;
 class ImagenEventoController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Guardar imagenes de evento
+     * Aqui se obtiene el json desde la aplicaión y se guarda el array de objetos en una variable, la cual entrará a un foreach que cuardará cada objeto en la base de datos para al final mandar el mensaje de que todo estuvo correcto
      *
      * @return \Illuminate\Http\Response
      */
@@ -34,7 +35,7 @@ class ImagenEventoController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Se obtiene un objeto desde el json, se crea un nuevo objeto tipo Imagenevento y al final se guarda para después enviar el mensaje de que todo fue satisfactorio
      *
      * @return \Illuminate\Http\Response
      */
@@ -47,7 +48,7 @@ class ImagenEventoController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Aqui se obtiene desde el request el string con el cual se identifica la imagen para después buscar similitudes y borrar la imagen en la base de datos
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response

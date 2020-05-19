@@ -25,4 +25,16 @@ class CatalogoServicio extends Model
         'sabado',
         'domingo',
     ];
+    public function scopeNombre($query, $nombre)
+    {
+        if($nombre)
+            return $query->orWhere('nombre', 'LIKE', '%'.$nombre.'%'));
+    }
+    public function scopeCategoria($query, $categoria)
+    {
+        if($categoria)
+            return $query->Where('categoriaevento','=',$categoria);
+
+    }
+    
 }

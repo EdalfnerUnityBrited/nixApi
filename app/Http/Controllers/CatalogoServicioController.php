@@ -18,14 +18,25 @@ use Illuminate\Support\Facades\DB;
 
 class CatalogoServicioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
+    /** Busqueda de Servicios 
+     * En esta función se guardan en variables los nombres que se obtienen de la aplicación dependiendo de
+     * el parametro que se esta enviando. Es entonces que utilizando el metodo de QueryScope se llaman a las
+     * funciones enviando las variables y realizando la búsqueda y obteniendo todos los resultados encontrados
+     * al igual que en paquetes y en artículos se retornan en un Json hacia la aplicación
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function buscarServicio(Request $request)
     {
-        //
+        $nombre       = $request->get('nombre');
+        $categoria    = $request->get('categoriaevento');
+
+        $servicio = CatalogoServicio::orderBy('id','DESC')
+        ->nombre($nombre_evento)
+        ->categoria($categoria)
+        ->get();
+
+        return response()->json(['paquete'=>$servicio]);
     }
 
     /**
@@ -38,10 +49,11 @@ class CatalogoServicioController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
+    /**Crear Servicio
+     * Primeramente se decodifica el contenido enviado desde la aplicación para poder transformarlo a objetos
+     * una vez transformado a objetos, se llama al modelo de CatalogoServicio para crear un servicio con el objeto
+     * recibdo por parte del request para después guardar el objeto y retornar que se ha creado satisfactoriamente
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function newService(Request $request)

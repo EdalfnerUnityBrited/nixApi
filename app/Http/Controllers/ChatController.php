@@ -10,7 +10,8 @@ use App\Chat;
 
 class ChatController extends Controller
 {
-
+    /*Se recibe en el request los id de los 2 usuarios se decodifica y se guarda en una variable para después validar que se enviaron los dos id de los usuarios para después crear el chat basandose en el modelo de Chat y al final solo se guarda el chat
+    */
     public function newchat(Request $request) {
         $data = json_decode($request->getContent(), true);
         

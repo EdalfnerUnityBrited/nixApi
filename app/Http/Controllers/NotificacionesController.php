@@ -17,8 +17,8 @@ use Illuminate\Support\Facades\DB;
 class NotificacionesController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
+     * Obtener notificaciones
+     * Aqui se obtienen las notificaciones del usuario que ha solicitado la petición, primeramente se obtiene la fecha de hoy y el usuario. Después llamamos a la tabla notificaciones donde la fecha actual se encuentre entre la fecha de inicio de la notificacion y la fecha final de la notificacion. Y se obtienen todas las notificaciones para mandarlas en el json
      * @return \Illuminate\Http\Response
      */
     public function getUser(Request $request)

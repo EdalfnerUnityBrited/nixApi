@@ -15,8 +15,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 class PaqueteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
+    /**Crear Paquete
+     * Primeramente se decodifica el contenido enviado desde la aplicación para poder transformarlo a objetos
+     * una vez transformado a objetos, se llama al modelo de Paquete para crear un articulo con el objeto
+     * recibido por parte del request para después guardar el objeto y retornar que se ha creado satisfactoriamente
      *
      * @return \Illuminate\Http\Response
      */
@@ -30,14 +32,26 @@ class PaqueteController extends Controller
                     'message' => 'Service created succesfuly'], 201);
     }
 
-    /**
-     * Show the form for creating a new resource.
+    /** Busqueda de Paquetes 
+     * En esta función se guardan en variables los nombres que se obtienen de la aplicación dependiendo de
+     * el parametro que se esta enviando. Es entonces que utilizando el metodo de QueryScope se llaman a las
+     * funciones enviando las variables y realizando la búsqueda y obteniendo todos los resultados encontrados
+     * despues de obtener los resultados se envían a la aplicación mediante un json
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function buscarPaquete(Request $request)
     {
-        //
+        $nombre      = $request->get('nombre');
+        $precioInicio = $request->get('precioIni');
+        $precioFinal  = $request->get('precioFin');
+
+        $paquete = Paquete::orderBy('id','DESC')
+        ->nombre($nombre_evento)
+        ->precio($precioInicio, $precioFinal)
+        ->get();
+
+        return response()->json(['paquete'=>$paquete]);
     }
 
     /**

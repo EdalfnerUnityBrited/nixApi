@@ -19,8 +19,10 @@ use Illuminate\Support\Facades\DB;
 
 class ArticuloController extends Controller
 {
-    /**
-     * Display a listing of the resource.
+    /**Crear Articulo
+     * Primeramente se decodifica el contenido enviado desde la aplicación para poder transformarlo a objetos
+     * una vez transformado a objetos, se llama al modelo de Articulo para crear un articulo con el objeto
+     * recibdo por parte del request para después guardar el objeto y retornar que se ha creado satisfactoriamente
      *
      * @return \Illuminate\Http\Response
      */
@@ -33,14 +35,29 @@ class ArticuloController extends Controller
                     'message' => 'Service created succesfuly'], 201);   
     }
 
-    /**
-     * Show the form for creating a new resource.
+    /** Busqueda de Articulos 
+     * En esta función se guardan en variables los nombres que se obtienen de la aplicación dependiendo de
+     * el parametro que se esta enviando. Es entonces que utilizando el metodo de QueryScope se llaman a las
+     * funciones enviando las variables y realizando la búsqueda y obteniendo todos los resultados encontrados
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function buscarArticulo(Request $request)
     {
-        //
+        $nombre       = $request->get('nombre');
+        $precioInicio = $request->get('precioIni');
+        $precioFinal  = $request->get('precioFin');
+        $precioPor    = $request->get('precioPor');
+        $categoria    = $request->get('categoria');
+
+        $paquete = Paquete::orderBy('id','DESC')
+        ->nombre($nombre_evento)
+        ->precio($precioInicio, $precioFinal)
+        ->precioPor($precioPor)
+        ->categoria($categoria)
+        ->get();
+
+        return response()->json(['paquete'=>$paquete]);
     }
 
     /**

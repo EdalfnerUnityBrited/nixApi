@@ -13,6 +13,9 @@ use Laravel\Cashier\Cashier;
 
 class AuthController extends Controller
 {
+    /*Creacion de la cuenta
+        En esta parte utilizando los metodos de laravel obtenemos desde la aplicacion un objeto en json el cual vamos a decodificar y a guardar en un objeto, para después verificar que los datos existan, que las contraseñas estén confirmadas y que el email no esté repetido. Después de validar todos estos campos se procede a crear el usuario utilizando la clase user, se encripta la contraseña, se coloca una imágen de default en lo que el usuario la cambia, se añade al usuario a nuestra lista de clientes de stripe y se envia el mensaje de que el usuario ha sido creado satisfactoriamente
+    */  
     public function signup(Request $request) {
         $data = json_decode($request->getContent(), true);
         
@@ -29,7 +32,9 @@ class AuthController extends Controller
         return response()->json([
                     'message' => 'Successfully created user!'], 201);
     }
-
+    /*Crear cuenta con Facebook o Google
+        Aqui al igual que en el metodo de arriba, se obtienen todos los datos del json que se mandó y se verifican que todos los campos sean correctos, para solo encriptar la contraseña y después crear el usuario además de añadirlo a nuestra lista de clientes para en dado caso que el usuario quiera realizar un pago en linea y al final se envía el mensaje de que se ha creado el usuario correctamente
+    */
     public function signupFG(Request $request) {
         $data = json_decode($request->getContent(), true);
         
@@ -45,7 +50,10 @@ class AuthController extends Controller
         return response()->json([
                     'message' => 'Successfully created user!'], 201);
     }
+    /*Inicio de sesión
+        En esta parte se obtiene el json y se convierte, para después validar el email, el password y el remember_me, en dado caso que estos campos estén correctamente validados se pasará a realizar la validación de que el email y el passsword coincidan con los del usuario, en dado caso que sean incorrectos solo se envia el mensaje de que no está autorizado. En dado caso que si esté autorizado se crea un token para que no tenga que iniciar sesión cada vez, y se manda el usuario y el token
 
+    */
     public function login(Request $request) {
         $data = json_decode($request->getContent(), true);
         
@@ -76,18 +84,25 @@ class AuthController extends Controller
                             'usuario'=>$user
         ]);
     }
-    
+    /*Cerrar Sesión
+        En este caso se quita el token de iniciar sesión y se manda el mesaje de que todo estuvo correcto
+    */
     public function logout(Request $request)
     {
         $request->user()->token()->revoke();
         return response()->json(['message' => 
             'Successfully logged out']);
     }
-
+    /*Enviar la informacion del usuario
+        Se envia un json con los datos del usuario
+    */
     public function user(Request $request)
     {
         return response()->json($request->user());
     }
+    /*Cambio de foto
+        Primeramente se obtiene el usuario que está actualmenete logueado para después proceder a obtener del request el atributo "fotoperfil", ahora solo se guardan cambios y se retorna el mensaje de que todo fue un exito.
+    */
     public function cambioFoto(Request $request)
     {
         
@@ -96,6 +111,9 @@ class AuthController extends Controller
         $user->save();
         return response()->json(['message'=>'Successfully updated photo']);
     }
+    /*Cambio de informacion
+        Primeramente se obtienen los datos de un json, el cual se valida que los datos que se espera recibir sean correctos. Entonces una vez validados los datos se procederá a obtener el usuario con el cual se realizó la petición, se actualizan los datos se guardan cambios y al final se retorna la respuesta de que todo estuvo correcto
+    */
     public function cambioDatos(Request $request)
     {
         $data = json_decode($request->getContent(), true);
@@ -115,6 +133,9 @@ class AuthController extends Controller
         $user->save();
         return response()->json(['message'=>'Successfully updated data']);
     }
+    /*Cambio de contraseña
+        Aqui se obtienen los datos y se decodifica el json para después validar que la contraseña cuente con una confirmación de contraseña y que sea string. Después se procede a obtener el usuario con el cual se ha realizado la petición, se cambia la contraseña. Se encripta y se guarda, para despues enviar el mensaje de que estuvo todo correcto
+    */
     public function cambioContrasena(Request $request){
         $data = json_decode($request->getContent(), true);
          Validator::make($data, [
@@ -126,6 +147,8 @@ class AuthController extends Controller
          $user->save();
          return response()->json(['message'=>'Successfully updated password']);
     }
+
+    //Documentación posterior, función no terminada
     public function payment(Request $request){
 
 
@@ -134,6 +157,9 @@ class AuthController extends Controller
         return response()->json(['message'=>'Successfully added card!']);
     
     }
+    /*Verificar email
+        En este apartado se verifica que el email ingresado exista, en el caso de que si exista el correo se envía un objeto de tipo usuario, en caso contrario la respuesta es nula
+    */
     public function existeciaCuenta(Request $request){
         $user=DB::table('users')
         ->select('users.*')
@@ -141,16 +167,5 @@ class AuthController extends Controller
         ->first();
          return response()->json(['usuario'=>$user]);   
     }
-    public function retrievePayment(Request $request){
-    	$user=$request->user();
-    	if ($user->hasPaymentMethod()) {
-    	$paymentMethod = $user->defaultPaymentMethod();
-    	
 
-
-    	return response()->json(['message'=>'OK']);
-		}
-    	
-    	return response()->json(['message'=>'No tienes metodos']);
-    }
 }

@@ -18,8 +18,8 @@ use Illuminate\Support\Facades\DB;
 class EventosController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
+     * Obtener los eventos del usuario
+     * En esta parte se obtiene el usuario que ha realizado la petición, la fecha de ahora la guardamos en una variable y realizamos la consulta donde los eventos sean del usuario y la fecha sea después de el dia actual
      * @return \Illuminate\Http\Response
      */
     public function getUserEvents(Request $request)
@@ -36,7 +36,12 @@ $now = Carbon::now();
     
     }
 
+    /*Se obtienen los datos desde el json, la fecha de hoy y el usuario para que a partir de esos datos se cree un nuevo objeto del modelo Eventos, en el cual se guardarán los datos extras que se requieran tales como el usuario que no creó, la tendencia y la fecha en que se creó el evento
 
+    Después dehacer el evento, ahora se hace un nuevo prospecto con el evento que se acaba de crear y con el id del usuario en el estado de prospecto se va a poner que el estado del prospecto es el creador.
+
+    Al final se manda la respuesta de que todo se creó correctamente
+    */
     public function newevento(Request $request)
     {
         $data = json_decode($request->getContent(), true);
@@ -57,8 +62,8 @@ $now = Carbon::now();
                     'eventos' => $evento], 201);
     }
     /**
-     * Show the form for creating a new resource.
-     *
+     * Obtener todos los eventos
+     * Aqui se obtiene la fecha actual y a partir de esa se hace una consulta donde el evento sea público y la fecha sea después de la fecha actual y se retoran esos eventos
      * @return \Illuminate\Http\Response
      */
     public function getAllEvents()
@@ -72,8 +77,8 @@ $now = Carbon::now();
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
+     * Buscar eventos
+     * En esta parte se obtienen todos los parametros para realizar la búsqueda y se guardan en variables. Despues mediante los query scopes se van construyendo las consultas y al final se obtienen los eventos y se envían a la aplicación
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -100,9 +105,9 @@ $now = Carbon::now();
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
+     * Tendencias
+     * Aqui se obtiene la fecha actual y después se obtienen todos los eventos que estén en tendencia y que estén después de la fecha actual
+     * 
      * @return \Illuminate\Http\Response
      */
     public function tendencia(Request $request)
@@ -121,34 +126,27 @@ $now = Carbon::now();
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * Lo que se hace aqui es buscar el evento por nombre, y se obtiene el primer evento con ese nombre y se envía ese evento
      * @return \Illuminate\Http\Response
      */
     public function buscarEvento(Request $request)
     {
-        $data = json_decode($request->getContent(), true);
         $separar=$request->input('nombre_evento');
         $evento = DB::table('eventos')
                         ->select('eventos.*')
                         ->where('nombre_evento', 'like', '%'.$separar.'%')
                         ->first();
-
-        
-        //return response()->json(['eventos'=>$separar[1]]);  
     
                 return response()->json(['eventos'=>$evento]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Obtener datos del evento tanto, toda la información y las imagenes relacionadas con ese evento para mostrarla en la informacion expandida del evento. Es entonces que se envían los eventos y también las imagenes
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function getSpecificEvent(Request $request)
     {
-        $data = json_decode($request->getContent(), true);
         $evento = DB::table('eventos')
                         ->select('eventos.*')
                         ->where('nombre_evento', $request->input('nombre_evento'))
@@ -162,9 +160,8 @@ $now = Carbon::now();
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
+     * Eliminar el evento
+     * Se obtiene la fecha actual para poder actualizar la fecha en que se muestran las notificaciones, despues se procede a buscar el evento por el id, se obtiene los datos del evento, se borra el objeto, se borran todos los prospectos del evento y al final se camiban las notificaciones para que se muestren en el instante y se cambia el menssaje de la notificación para decir que se ha cancelado el evento
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)
@@ -186,6 +183,9 @@ $now = Carbon::now();
                         ->update(['fechaInicio' => $now]);
                 return response()->json(['eventos'=>"Event deleted succesfully!"]);   
     }
+    /*Aaqui lo que se hace es corroborar si el evento está lleno o no, primeramente se busca el cupo del  evento por el nombre, después se obtienen la cuenta de todos los asistentes que se han confirmado y si el cupo ya está lleno se manda un mensaje de que ya está lleno
+
+    */
     public function cupo(Request $request)
     {
     	$data= json_decode($request->getContent(), true);
@@ -207,12 +207,17 @@ $now = Carbon::now();
         }
         return response()->json(['eventoLleno'=>$text]);
     }
+    /*Aqui se busca evento por id, se obtiene el id desde el request y al final se envía el evento
+    */
     public function searchId(Request $request){
     	$evento=DB::table('eventos')
     	->where('id','=', $request->input('cupo'))
     	->first();
     	return response()->json(['eventos'=>$evento]);
     }
+    /*Al momento de actualizar lo que se hace es solicitar todos los campos del request para cambiár los datos y así poder guardar todos esos cambios en variables para que al final se pueda cguardar los cambios
+
+    */
     public function actualizarEvento(Request $request){
     	$data= json_decode($request->getContent(), true);
     	$eventos=Eventos::find($request->input('id'));
@@ -231,6 +236,9 @@ $now = Carbon::now();
     	$eventos->save();
     	return response()->json(['eventos'=>"Event updated succesfully!"]);
     }
+    /*Al momento de invitar a personas lo primero que se realiza es corroborar que el email exista y despues de corroborar que existe se procede a ver si no ha sido invitado al evento o si no ha confirmado asistencia al evento. Dspués de haber verificado el correo se procede a añadir al usuario a la tabla de prospectos con motivo de invitación y al final se hace la notificación poniendo el evento, la fecha y en la fecha se pone instantaneamente
+
+    */
     public function invitar(Request $request){
 
     	$usuario=User::where('email',$request->input('cupo'))->first();
@@ -267,13 +275,18 @@ $now = Carbon::now();
     	return response()->json(['message' => 'User added unsuccesfully'],404);
     	
     }
+    /*Obtener los eventos por ID
+        Aqui se busca evento por id, se obtiene el id desde el request y al final se envía el evento
+    */
     public function getEventId(Request $request){
         $evento =DB::table('eventos')
                 ->where('id','=', $request->input('cupo'))
                 ->first();
     return response()->json(['eventos' =>$evento]);  
     }
-
+/*Obtener los datos del usuario
+A partir del id del evento se buscan los datos del usuario que ha creado el evento y se obtiene solo un resultado mandando todo el usuario para mostrar en la vista los datos en dado caso de que quieran saber quien es el creador del evento
+*/
     public function getUserData(Request $request){
         $usuario =DB::table('eventos')
                 ->join('users', 'eventos.id_creador', '=', 'users.id')
@@ -282,6 +295,9 @@ $now = Carbon::now();
                 ->first();
                  return response()->json(['usuario' =>$usuario]);
     }
+    /*Obtener los usuarios confirmados
+      Primeramente se une la tabla de prospectos, eventos y usuarios para que los prospectos que estén confirmados y los muestra enviando el nombre en orden alfabetico
+    */
     public function getInvitedUsers(Request $request){
                 $usuarios =DB::table('prospectos')
                 ->join('eventos', 'eventos.id', '=', 'prospectos.id_evento')
