@@ -10,6 +10,6 @@ class PaqueteArticulo extends Model
     protected $fillable = [
     	'id',
         'id_paquete',
-        'id_articulo'
+        'articulo'
     ];
 }
