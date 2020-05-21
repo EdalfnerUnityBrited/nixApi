@@ -28,8 +28,8 @@ class CatalogoServicioController extends Controller
      */
     public function buscarServicio(Request $request)
     {
-        $nombre       = $request->get('nombre');
-        $categoria    = $request->get('categoriaevento');
+        $nombre       = $request->input('nombre');
+        $categoria    = $request->input('categoriaevento');
 
         $servicio = CatalogoServicio::orderBy('id','DESC')
         ->nombre($nombre_evento)

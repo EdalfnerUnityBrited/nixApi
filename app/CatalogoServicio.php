@@ -28,7 +28,7 @@ class CatalogoServicio extends Model
     public function scopeNombre($query, $nombre)
     {
         if($nombre)
-            return $query->orWhere('nombre', 'LIKE', '%'.$nombre.'%'));
+            return $query->orWhere('nombre', 'LIKE', '%'.$nombre.'%');
     }
     public function scopeCategoria($query, $categoria)
     {
