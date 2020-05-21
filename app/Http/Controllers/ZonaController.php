@@ -10,10 +10,11 @@ use App\Cupo;
 use App\Eventos;
 use App\Imageneventos;
 use Carbon\Carbon;
-use Carbon\Zonaservicio;
+use App\Zonaservicio;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
 
 class ZonaController extends Controller
 {
@@ -25,6 +26,7 @@ class ZonaController extends Controller
     public function municipio(Request $request)
     {
         $data = json_decode($request->getContent(), true);
+        
         $zona=collect($data)->all();
         foreach ($zona as $zonaServicio) {
             $servicio= new Zonaservicio($zonaServicio);
