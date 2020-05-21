@@ -26,10 +26,10 @@ class PaqueteController extends Controller
     {
         $data = json_decode($request->getContent(), true);
         $user= $request->user();
-        $servicio= new Paquete($data);
-        $servicio->save();
+        $paquete= new Paquete($data);
+        $paquete->save();
         return response()->json([
-                    'message' => 'Service created succesfuly'], 201);
+                    'paquete' => $paquete], 201);
     }
 
     /** Busqueda de Paquetes 

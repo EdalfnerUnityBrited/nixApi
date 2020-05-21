@@ -18,7 +18,7 @@ class Paquete extends Model
     public function scopeNombre($query, $nombre)
     {
     	if($nombre)
-    		return $query->orWhere('nombre', 'LIKE', '%'.$nombre.'%'));
+    		return $query->orWhere('nombre', 'LIKE', '%'.$nombre.'%');
     }
     public function scopePrecio($query, $precioInicio, $precioFin)
     {
