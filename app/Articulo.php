@@ -19,12 +19,12 @@ class Articulo extends Model
     public function scopeNombre($query, $nombre)
     {
         if($nombre)
-            return $query->orWhere('nombre', 'LIKE', '%'.$nombre.'%'));
+            return $query->orWhere('nombre', 'LIKE', '%'.$nombre.'%');
     }
     public function scopeCategoria($query, $categoria)
     {
         if($categoria)
-            return $query->Where('categoria_articulo', 'LIKE', '%'.$categoria.'%'));
+            return $query->Where('categoria_articulo', 'LIKE', '%'.$categoria.'%');
     }
     public function scopePrecio($query, $precioInicio, $precioFin)
     {
@@ -36,7 +36,7 @@ class Articulo extends Model
     public function scopePrecioPor($query, $precioPor)
     {
         if($precioPor)
-            return $query->Where('precioPor', 'LIKE', '%'.$precioPor.'%'));
+            return $query->Where('precioPor', 'LIKE', '%'.$precioPor.'%');
     }
      
 }
