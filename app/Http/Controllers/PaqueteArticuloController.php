@@ -22,7 +22,7 @@ class PaqueteArticuloController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function añadirArticuloPaquete(Request $request)
+    public function nuevoArticuloPaquete(Request $request)
     {
        $data = json_decode($request->getContent(), true);
         $articulos=collect($data)->all();
