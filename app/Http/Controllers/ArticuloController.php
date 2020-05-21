@@ -32,7 +32,7 @@ class ArticuloController extends Controller
         $servicio= new Articulo($data);
         $servicio->save();
         return response()->json([
-                    'message' => 'Service created succesfuly'], 201);   
+                    'articulo' => $servicio], 201);   
     }
 
     /** Busqueda de Articulos 
