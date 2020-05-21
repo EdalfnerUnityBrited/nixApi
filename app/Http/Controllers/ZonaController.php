@@ -8,28 +8,30 @@ use Illuminate\Support\Facades\Validator;
 use App\User;
 use App\Cupo;
 use App\Eventos;
-use App\Citas;
 use App\Imageneventos;
 use Carbon\Carbon;
+use Carbon\Zonaservicio;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
-class CitasController extends Controller
+class ZonaController extends Controller
 {
     /**
-     * Agendar Cita
-     * Se obtienen los datos del json y se decodifican para guardarlos en una variable para después obtener el usuario y se crea el objeto con el modelo de citas, y se guarda la cita para enviar el mensaje de que la cita se ha hecho correctamente
+     * Display a listing of the resource.
+     *
      * @return \Illuminate\Http\Response
      */
-    public function agendarCita(Request $request)
+    public function añadirMunicipio(Request $request)
     {
-        $data= json_decode($request->getContent(), true);
-        $user= $request->user();
-        $cita= new Citas($data);
-        $cita->id_usuario=$user["id"];
-        $cita->save();
-        return response()->json(['message' => 'Date added succesfully!']);
+        $data = json_decode($request->getContent(), true);
+        $imagenes=collect($data)->all();
+        foreach ($imagenes as $imagen) {
+            $image= new Zonaservicio($imagen);
+            $image->save();
+        }
+        
+        return response()->json(['message'=>'Successfully added photos'], 201);
     }
 
     /**

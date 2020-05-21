@@ -65,7 +65,7 @@ class CatalogoServicioController extends Controller
         $servicio->id_usuario=$user["id"];
         $servicio->save();
         return response()->json([
-                    'message' => 'Service created succesfuly'], 201);
+                    'servicio' => $servicio], 201);
     }
 
     /**

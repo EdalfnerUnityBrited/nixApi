@@ -4,32 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use App\User;
-use App\Cupo;
-use App\Eventos;
-use App\Citas;
-use App\Imageneventos;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
 
-class CitasController extends Controller
+class BuscarServiciosController extends Controller
 {
     /**
-     * Agendar Cita
-     * Se obtienen los datos del json y se decodifican para guardarlos en una variable para después obtener el usuario y se crea el objeto con el modelo de citas, y se guarda la cita para enviar el mensaje de que la cita se ha hecho correctamente
+     * Display a listing of the resource.
+     *
      * @return \Illuminate\Http\Response
      */
-    public function agendarCita(Request $request)
+    public function buscarArticulo()
     {
-        $data= json_decode($request->getContent(), true);
-        $user= $request->user();
-        $cita= new Citas($data);
-        $cita->id_usuario=$user["id"];
-        $cita->save();
-        return response()->json(['message' => 'Date added succesfully!']);
+        //
     }
 
     /**

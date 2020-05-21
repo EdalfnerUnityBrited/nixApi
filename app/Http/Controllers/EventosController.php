@@ -181,6 +181,8 @@ $now = Carbon::now();
                         ->update(['contenido' => "El evento ".$eventos->nombre_evento." ha sido eliminado"]);
         Notificaciones::where('id_evento', $request->input('id'))
                         ->update(['fechaInicio' => $now]);
+        Notificaciones::where('id_evento', $request->input('id'))
+                        ->update(['tipoNotificacion' => 4]);
                 return response()->json(['eventos'=>"Event deleted succesfully!"]);   
     }
     /*Aaqui lo que se hace es corroborar si el evento está lleno o no, primeramente se busca el cupo del  evento por el nombre, después se obtienen la cuenta de todos los asistentes que se han confirmado y si el cupo ya está lleno se manda un mensaje de que ya está lleno
