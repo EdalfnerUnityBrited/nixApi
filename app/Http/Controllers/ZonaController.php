@@ -22,13 +22,13 @@ class ZonaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function añadirMunicipio(Request $request)
+    public function municipio(Request $request)
     {
         $data = json_decode($request->getContent(), true);
-        $imagenes=collect($data)->all();
-        foreach ($imagenes as $imagen) {
-            $image= new Zonaservicio($imagen);
-            $image->save();
+        $zona=collect($data)->all();
+        foreach ($zona as $zonaServicio) {
+            $servicio= new Zonaservicio($zonaServicio);
+            $servicio->save();
         }
         
         return response()->json(['message'=>'Successfully added photos'], 201);
