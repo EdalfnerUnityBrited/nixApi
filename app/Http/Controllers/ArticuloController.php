@@ -104,7 +104,7 @@ class ArticuloController extends Controller
         $articulo->precioPor=$request->input('precioPor');
         $articulo->precio=$request->input('precio');
         $articulo->save();
-        return response()->json(['message'=>'Actualizado correctamente']);
+        return response()->json(['articulo'=>$articulo]);
     }
 
     /**
