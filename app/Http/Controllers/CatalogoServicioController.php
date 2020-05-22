@@ -36,7 +36,7 @@ class CatalogoServicioController extends Controller
         ->categoria($categoria)
         ->get();
 
-        return response()->json(['paquete'=>$servicio]);
+        return response()->json(['servicios'=>$servicio]);
     }
 
     /**
@@ -44,9 +44,14 @@ class CatalogoServicioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function getUserService(Request $request)
     {
-        //
+        $user=$request->user();
+        $servicio= DB::table('catalogo_servicios')
+        ->where('id_usuario',$user["id"])
+        ->get();
+
+        return response()->json(['servicios'=>$servicio]);
     }
 
     /**Crear Servicio

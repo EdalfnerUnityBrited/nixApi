@@ -60,9 +60,13 @@ class PaqueteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function getPaqueteServicio(Request $request)
     {
-        //
+        $paquete=DB::table('paquetes')
+        ->where('id_servicio',$request->input('id'))
+        ->get();
+
+        return response()->json(['paquetes'=>$paquete]);
     }
 
     /**

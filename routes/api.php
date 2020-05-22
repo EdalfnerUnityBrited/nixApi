@@ -87,6 +87,8 @@ Route::group(['middleware' => 'auth:api'], function() {
 		Route::post('zonaServicio','ZonaController@municipio');
 		Route::post('paqueteArticulo','PaqueteArticuloController@nuevoArticuloPaquete');
 		Route::post('articuloServicio','ArticuloController@getServiceArticle');
+		Route::post('paqueteServicio','PaqueteController@getPaqueteServicio');
+		Route::get('usuarioServicio','CatalogoServicioController@getUserService');
 		});
 		Route::get('notificaciones','NotificacionesController@getUser');//Aqui se obtienen las notificaciones del usuario
 
