@@ -36,7 +36,7 @@ class CatalogoServicioController extends Controller
         ->categoria($categoria)
         ->get();
 
-        return response()->json(['servicios'=>$servicio]);
+        return response()->json(['servicio'=>$servicio]);
     }
 
     /**
@@ -46,8 +46,8 @@ class CatalogoServicioController extends Controller
      */
     public function getUserService(Request $request)
     {
-        $user=$request->user();
-        $servicio= DB::table('catalogo_servicios')
+        $user= $request->user();
+        $servicios= DB::table('catalogo_servicios')
         ->where('id_usuario',$user["id"])
         ->get();
 
