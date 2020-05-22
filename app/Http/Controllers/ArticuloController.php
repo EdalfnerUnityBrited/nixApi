@@ -81,9 +81,12 @@ class ArticuloController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function getArticle(Request $request)
     {
-        //
+        $articulo=DB::table('articulos')
+        ->where('id',$request->input('id'))
+        ->first();
+        return response()->json(['articulos'=>$articulo]);
     }
 
     /**
@@ -92,9 +95,16 @@ class ArticuloController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function updateArticle(Request $request)
     {
-        //
+        $articulo = Articulo::find($request->input('id'));
+        $articulo->nombre=$request->input('nombre');
+        $articulo->categoria_articulo=$request->input('categoria_articulo');
+        $articulo->descripcion=$request->input('descripcion');
+        $articulo->precioPor=$request->input('precioPor');
+        $articulo->precio=$request->input('precio');
+        $articulo->save();
+        return response()->json(['message'=>'Actualizado correctamente']);
     }
 
     /**
