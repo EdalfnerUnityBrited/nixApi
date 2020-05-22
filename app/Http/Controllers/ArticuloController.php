@@ -86,7 +86,7 @@ class ArticuloController extends Controller
         $articulo=DB::table('articulos')
         ->where('id',$request->input('id'))
         ->first();
-        return response()->json(['articulos'=>$articulo]);
+        return response()->json(['articulo'=>$articulo]);
     }
 
     /**
