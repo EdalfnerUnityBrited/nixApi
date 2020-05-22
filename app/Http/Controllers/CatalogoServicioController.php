@@ -47,7 +47,7 @@ class CatalogoServicioController extends Controller
     public function getUserService(Request $request)
     {
         $user= $request->user();
-        $servicios= DB::table('catalogo_servicios')
+        $servicio= DB::table('catalogo_servicios')
         ->where('id_usuario',$user["id"])
         ->get();
 
