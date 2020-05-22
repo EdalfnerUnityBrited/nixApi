@@ -24,6 +24,7 @@ class CatalogoServicio extends Model
         'viernes',
         'sabado',
         'domingo',
+        'nombreProveedor'
     ];
     public function scopeNombre($query, $nombre)
     {
