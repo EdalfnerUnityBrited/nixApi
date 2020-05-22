@@ -95,9 +95,26 @@ class CatalogoServicioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function actualizarServicio(Request $request)
     {
-        //
+        $data = json_decode($request->getContent(), true);
+        $servicio = CatalogoServicio::find($request->input('id'));
+        $servicio->nombre=$request->input('nombre');
+        $servicio->categoriaevento=$request->input('categoriaevento');
+        $servicio->direccion=$request->input('direccion');
+        $servicio->telefono=$request->input('telefono');
+        $servicio->horarioApertura=$request->input('horarioApertura');
+        $servicio->horarioCierre=$request->input('horarioCierre');
+        $servicio->lunes=$request->input('lunes');
+        $servicio->martes=$request->input('martes');
+        $servicio->miercoles=$request->input('miercoles');
+        $servicio->jueves=$request->input('jueves');
+        $servicio->viernes=$request->input('viernes');
+        $servicio->sabado=$request->input('sabado');
+        $servicio->domingo=$request->input('domingo');
+        $servicio->nombreProveedor=$request->input('nombreProveedor');
+        $servicio->save();
+        return response()->json(['servicio'=>$servicio]);
     }
 
     /**
