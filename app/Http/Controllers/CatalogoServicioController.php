@@ -36,7 +36,7 @@ class CatalogoServicioController extends Controller
         ->categoria($categoria)
         ->get();
 
-        return response()->json(['servicio'=>$servicio]);
+        return response()->json(['servicios'=>$servicio]);
     }
 
     /**
@@ -79,9 +79,14 @@ class CatalogoServicioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function getServiceId(Request $request)
     {
-        //
+
+        $servicio= DB::table('catalogo_servicios')
+        ->where('id',$request->input('id'))
+        ->first();
+
+        return response()->json(['servicio'=>$servicio]);
     }
 
     /**
