@@ -50,7 +50,7 @@ class ArticuloController extends Controller
         $precioPor    = $request->get('precioPor');
         $categoria    = $request->get('categoria');
 
-        $paquete = Paquete::orderBy('id','DESC')
+        $paquete = Articulo::orderBy('id','DESC')
         ->nombre($nombre_evento)
         ->precio($precioInicio, $precioFinal)
         ->precioPor($precioPor)
@@ -66,9 +66,13 @@ class ArticuloController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function getServiceArticle(Request $request)
     {
-        //
+        $articulo=DB::table('articulos')
+        ->where('id_catalogoServicio',$request->input('id'))
+        ->get();
+
+        return response()->json(['articulos'=>$articulo]);
     }
 
     /**

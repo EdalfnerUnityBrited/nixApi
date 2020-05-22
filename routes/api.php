@@ -86,6 +86,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 		Route::post('buscarServicio','CatalogoServicioController@buscarServicio');//Aqui se busca un servicio aplicando filtros
 		Route::post('zonaServicio','ZonaController@municipio');
 		Route::post('paqueteArticulo','PaqueteArticuloController@nuevoArticuloPaquete');
+		Route::post('articuloServicio','ArticuloController@getServiceArticle');
 		});
 		Route::get('notificaciones','NotificacionesController@getUser');//Aqui se obtienen las notificaciones del usuario
 
