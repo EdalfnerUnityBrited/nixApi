@@ -51,13 +51,13 @@ class ArticuloController extends Controller
         $categoria    = $request->get('categoria');
 
         $paquete = Articulo::orderBy('id','DESC')
-        ->nombre($nombre_evento)
+        ->nombre($nombre)
         ->precio($precioInicio, $precioFinal)
         ->precioPor($precioPor)
         ->categoria($categoria)
         ->get();
 
-        return response()->json(['paquete'=>$paquete]);
+        return response()->json(['articulos'=>$paquete]);
     }
 
     /**

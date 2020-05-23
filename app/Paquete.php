@@ -18,13 +18,14 @@ class Paquete extends Model
     public function scopeNombre($query, $nombre)
     {
     	if($nombre)
-    		return $query->orWhere('nombre', 'LIKE', '%'.$nombre.'%');
+    		return $query->where('nombre', 'LIKE', '%'.$nombre.'%');
     }
-    public function scopePrecio($query, $precioInicio, $precioFin)
+    public function scopePrecio($query, $precioInicio, $precioFinal)
     {
-    	if($precioInicio)
-    		return $query->Where('precio','<',$precioInicio)
-    					->Where('precio','>',$precioFin);
+    	if($precioFinal){
+    		return $query->where('precio','>',$precioInicio)
+    					->where('precio','<=',$precioFinal);
+        }
 
     }
    

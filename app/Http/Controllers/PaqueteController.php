@@ -46,8 +46,9 @@ class PaqueteController extends Controller
         $precioInicio = $request->get('precioIni');
         $precioFinal  = $request->get('precioFin');
 
+
         $paquete = Paquete::orderBy('id','DESC')
-        ->nombre($nombre_evento)
+        //->nombre($nombre)
         ->precio($precioInicio, $precioFinal)
         ->get();
 

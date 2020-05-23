@@ -24,19 +24,19 @@ class Articulo extends Model
     public function scopeCategoria($query, $categoria)
     {
         if($categoria)
-            return $query->Where('categoria_articulo', 'LIKE', '%'.$categoria.'%');
+            return $query->where('categoria_articulo', 'LIKE', '%'.$categoria.'%');
     }
     public function scopePrecio($query, $precioInicio, $precioFin)
     {
-        if($precioInicio)
-            return $query->Where('precio','<',$precio)
-                        ->Where('precio','>',$precioFin);
+        if($precioFin)
+            return $query->where('precio','>',$precioInicio)
+                        ->where('precio','<=',$precioFin);
 
     }
     public function scopePrecioPor($query, $precioPor)
     {
         if($precioPor)
-            return $query->Where('precioPor', 'LIKE', '%'.$precioPor.'%');
+            return $query->where('precioPor', 'LIKE', '%'.$precioPor.'%');
     }
      
 }
