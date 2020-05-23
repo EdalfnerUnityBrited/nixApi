@@ -47,7 +47,6 @@ class ArticuloController extends Controller
         $nombre       = $request->get('nombre');
         $precioInicio = $request->get('precioIni');
         $precioFinal  = $request->get('precioFin');
-        $precioPor    = $request->get('precioPor');
         $categoria    = $request->get('categoria');
 
         $paquete = Articulo::orderBy('id','DESC')

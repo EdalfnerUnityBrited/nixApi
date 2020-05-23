@@ -33,10 +33,5 @@ class Articulo extends Model
                         ->where('precio','<=',$precioFin);
 
     }
-    public function scopePrecioPor($query, $precioPor)
-    {
-        if($precioPor)
-            return $query->where('precioPor', 'LIKE', '%'.$precioPor.'%');
-    }
      
 }
