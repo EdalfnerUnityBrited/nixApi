@@ -124,9 +124,12 @@ class CatalogoServicioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function eraseService(Request $request)
     {
-        //
+        DB::table('catalogo_servicios')
+        ->where('id', '=', $request->input('id'))
+        ->delete();
+        return response()->json(['message'=>'Borrado satisfactoriamente']);
     }
 
     /**

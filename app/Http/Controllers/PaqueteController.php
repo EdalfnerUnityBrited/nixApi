@@ -75,9 +75,12 @@ class PaqueteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function erasePackage(Request $request)
     {
-        //
+        DB::table('paquetes')
+        ->where('id', '=', $request->input('id'))
+        ->delete();
+        return response()->json(['message'=>'borrado correctamente']);
     }
 
     /**
