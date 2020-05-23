@@ -32,7 +32,7 @@ class CatalogoServicioController extends Controller
         $categoria    = $request->input('categoriaevento');
 
         $servicio = CatalogoServicio::orderBy('id','DESC')
-        ->nombre($nombre)
+        ->nombre($nombre) 
         ->categoria($categoria)
         ->get();
 
