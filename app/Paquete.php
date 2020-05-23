@@ -23,7 +23,7 @@ class Paquete extends Model
     public function scopePrecio($query, $precioInicio, $precioFin)
     {
     	if($precioInicio)
-    		return $query->Where('precio','<',$precio)
+    		return $query->Where('precio','<',$precioInicio)
     					->Where('precio','>',$precioFin);
 
     }
