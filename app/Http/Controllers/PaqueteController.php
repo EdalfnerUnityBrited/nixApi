@@ -52,7 +52,7 @@ class PaqueteController extends Controller
         ->precio($precioInicio, $precioFinal)
         ->get();
 
-        return response()->json(['paquete'=>$paquete]);
+        return response()->json(['paquetes'=>$paquete]);
     }
 
     /**
