@@ -52,7 +52,6 @@ class ArticuloController extends Controller
         $paquete = Articulo::orderBy('id','DESC')
         ->nombre($nombre)
         ->precio($precioInicio, $precioFinal)
-        ->precioPor($precioPor)
         ->categoria($categoria)
         ->get();
 
