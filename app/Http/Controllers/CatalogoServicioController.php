@@ -129,6 +129,12 @@ class CatalogoServicioController extends Controller
         DB::table('catalogo_servicios')
         ->where('id', '=', $request->input('id'))
         ->delete();
+        DB::table('articulos')
+        ->where('id_catalogoServicio', '=', $request->input('id'))
+        ->delete();
+        DB::table('paquetes')
+        ->where('id_servicio', '=', $request->input('id'))
+        ->delete();
         return response()->json(['message'=>'Borrado satisfactoriamente']);
     }
 
