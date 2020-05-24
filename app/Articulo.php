@@ -14,6 +14,7 @@ class Articulo extends Model
         'descripcion',
         'precioPor',
         'precio',
+        'fotoArticulo',
         'id_catalogoServicio',
     ];
     public function scopeNombre($query, $nombre)
