@@ -38,9 +38,18 @@ class CotizacionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function getUserCot(Request $request)
     {
-        //
+        $user=$request->user();
+        $cotizaciones= DB::table('cotizaciones')
+        ->join('eventos', 'cotizaciones.id_evento', '=', 'eventos.id')
+        ->join('users', 'eventos.id_creador', '=', 'users.id')
+        ->where('users.id',$user["id"])
+        ->select('cotizaciones.*')
+        ->get();
+
+         return response()->json([
+                    'cotizaciones' => $cotizaciones]);
     }
 
     /**
