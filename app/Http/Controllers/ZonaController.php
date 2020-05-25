@@ -41,9 +41,12 @@ class ZonaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function buscarZona(Request $request)
     {
-        //
+        $zona = DB::table('zonaservicios')
+        ->where('id_catalogoServicio',$request->input('id'))
+        ->get();
+         return response()->json(['municipios'=>$zona]);
     }
 
     /**

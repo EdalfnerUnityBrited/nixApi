@@ -96,6 +96,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 		Route::post('borrarPaquete','PaqueteController@erasePackage');
 		Route::post('borrarArticulo','ArticuloController@eraseArticle');
 		Route::post('borrarServicio','CatalogoServicioController@eraseService');
+		Route::post('municipioServicio','ZonaController@buscarZona');
 		});
 		Route::get('notificaciones','NotificacionesController@getUser');//Aqui se obtienen las notificaciones del usuario
 
