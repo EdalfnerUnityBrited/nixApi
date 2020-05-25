@@ -41,9 +41,12 @@ class CotizacionArticuloController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function getArticles(Request $request)
     {
-        //
+        $articulos= DB::table('cotizacion_articulos')
+        ->where('id_cotizacion',$request->input('id'))
+        ->get();
+        return response()->json(['articulos'=>$articulos]);
     }
 
     /**

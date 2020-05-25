@@ -42,9 +42,12 @@ class CotizacionPaqueteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function getPaquetes(Request $request)
     {
-        //
+        $articulos= DB::table('cotizacion_paquetes')
+        ->where('id_cotizacion',$request->input('id'))
+        ->get();
+        return response()->json(['paquetes'=>$articulos]);
     }
 
     /**

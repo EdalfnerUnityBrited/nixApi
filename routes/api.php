@@ -101,6 +101,8 @@ Route::group(['middleware' => 'auth:api'], function() {
 		Route::post('articulosCotizacion','CotizacionArticuloController@addArticles');
 		Route::post('paquetesCotizacion','CotizacionPaqueteController@addPaquete');
 		Route::post('usuarioCotizaciones','CotizacionController@getUserCot');
+		Route::post('obtenerArticulosCotizacion','CotizacionArticuloController@getArticles');
+		Route::post('obtenerPaquetesCotizacion','CotizacionPaqueteController@getPaquetes');
 		});
 		Route::get('notificaciones','NotificacionesController@getUser');//Aqui se obtienen las notificaciones del usuario
 
