@@ -148,6 +148,18 @@ class AuthController extends Controller
          return response()->json(['message'=>'Successfully updated password']);
     }
 
+    public function olvidarContrasena(Request $request){
+        $data = json_decode($request->getContent(), true);
+         Validator::make($data, [
+            'password' => 'required|string|confirmed',
+        ])->validate();
+         $user= User::find($request->input('name'));
+         $user->password=$request->input('password');
+         $user->password = Hash::make($user->password);
+         $user->save();
+         return response()->json(['message'=>'Successfully updated password']);
+    }    
+
     //Documentación posterior, función no terminada
     public function payment(Request $request){
 

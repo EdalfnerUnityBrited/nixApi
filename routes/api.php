@@ -28,6 +28,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('signup', 'AuthController@signup');//Esta ruta sirve para relacionar la función de crear cuenta
     Route::post('signupfg', 'AuthController@signupFG');//Esta ruta sirve para relacionar la función de iniciar sesion con Facebook o Google
     Route::post('verificar','AuthController@existeciaCuenta');//Esta ruta sirve para relacionar la función que verifica que si exista una cuenta con el correo
+    Route::post('forgot','AuthController@olvidarContrasena');
   //El middleware auth api es el que le pone candados a estas funciones. En dado caso que el usuario necesite realizar alguna de estas opciones necesitará primero haber ingresado a la aplicación
     Route::group(['middleware' => 'auth:api'], function() {
         Route::get('logout', 'AuthController@logout');//Esta ruta sirve para relacionar la función para cerrar la cuenta del usuario
