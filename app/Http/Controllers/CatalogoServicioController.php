@@ -144,8 +144,37 @@ class CatalogoServicioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function diaEvento(Request $request)
     {
-        //
+        $fecha=DB::table('citas')
+        ->where('fecha',$request->input('fecha'))
+        ->where('id_servicio',$request->input('id_servicio'))
+        ->first();
+        if (is_null($fecha)) {
+        $fecha=DB::table('servicioscontratados')
+        ->where('fecha',$request->input('fecha'))
+        ->where('id_servicio',$request->input('id_servicio'))
+        ->first();
+        if (is_null($fecha)) {
+        $horario=DB::table('catalogo_servicios')
+        ->where('id',$request->input('id_servicio'))
+        ->pluck('catalogo_servicios.horarioApertura')
+        ->first();
+        $horaDos=Carbon::createFromTimeString($horario);
+        $hora = Carbon::createFromTimeString($request->input('hora'));
+        if ($horaDos<$hora) {
+            return response()->json(['message'=>'La fecha está disponible']);
+        }
+        else{
+            return response()->json(['message'=>'La hora no está disponible'],404);   
+        }
+        }
+        else{
+            return response()->json(['messagessss'=>'La fecha esta ocupada'],404);
+        }
+        }
+        else{
+            return response()->json(['message'=>'La fecha esta ocupada'],404);
+        }
     }
 }

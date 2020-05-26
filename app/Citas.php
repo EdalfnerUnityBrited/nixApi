@@ -10,7 +10,7 @@ class Citas extends Model
     protected $fillable = [
     	'id',
         'id_usuario',
-        'id_proveedor',
+        'id_servicio',
         'fecha',
         'hora'
     ];
