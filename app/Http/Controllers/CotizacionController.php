@@ -44,8 +44,9 @@ class CotizacionController extends Controller
         $cotizaciones= DB::table('cotizaciones')
         ->join('eventos', 'cotizaciones.id_evento', '=', 'eventos.id')
         ->join('users', 'eventos.id_creador', '=', 'users.id')
+        ->join('catalogo_servicios','cotizaciones.id_servicio','=','catalogo_servicios.id')
         ->where('users.id',$user["id"])
-        ->select('cotizaciones.*')
+        ->select('cotizaciones.*','catalogo_servicios.nombre')
         ->get();
 
          return response()->json([

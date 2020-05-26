@@ -64,7 +64,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 	    Route::post('idEvento','EventosController@searchId');//Aqui se busca un evento por su ID
 	    Route::post('actualizar','EventosController@actualizarEvento');//Aqui se actualiza un evento
 	    Route::post('invitar','EventosController@invitar');//En esta parte se realizan las invitaciones de un evento a los usuarios
-	    Route::post('id','EventosController@getEventId');//Aqui se busca un evento por ID
+	    Route::post('id','EventosController@getEventId');//Aqui se busca un evento por su ID
 	    Route::post('invitados','EventosController@getInvitedUsers');//Aqui se obtienen todos los usuarios que han sido invitados a un evento
 	    Route::post('creador','EventosController@getUserData');//Aqui se obtienen los datos del creador del evento
 	});
