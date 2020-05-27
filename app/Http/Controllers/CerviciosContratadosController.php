@@ -11,6 +11,7 @@ use App\Eventos;
 use App\Citas;
 use App\Imageneventos;
 use App\Servicioscontratados;
+use App\Notificaciones;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -43,7 +44,26 @@ class CerviciosContratadosController extends Controller
             ->where('catalogo_servicios.id',$request->input('id_catalogo'))
             ->pluck('eventos.id')
             ->first();
-        $contratacion=new Servicioscontratados();
+        $nombre_evento= DB::table('catalogo_servicios')
+            ->join('cotizaciones', 'catalogo_servicios.id', '=', 'cotizaciones.id_servicio')
+            ->join('eventos', 'eventos.id', '=', 'cotizaciones.id_evento')
+            ->where('catalogo_servicios.id',$request->input('id_catalogo'))
+            ->pluck('eventos.nombre_evento')
+            ->first();
+        $id_proveedor= DB::table('catalogo_servicios')
+            ->where('catalogo_servicios.id',$request->input('id_catalogo'))
+            ->pluck('catalogo_servicios.id_usuario')
+            ->first();
+        $now = Carbon::now();
+                        $notificaciones= new Notificaciones();
+                        $notificaciones->id_receptor=$id_proveedor;
+                        $notificaciones->id_evento=$id;
+                        $notificaciones->fechaFin=$fecha;
+                        $notificaciones->fechaInicio=$now;
+                        $notificaciones->contenido=("Tienes un servicio para el evento ".$nombre_evento." el dia ".$fecha."");
+                        $notificaciones->tipoNotificacion=1;
+                        $notificaciones->save();
+       $contratacion=new Servicioscontratados();
         $contratacion->estado_servicio='pendiente';
         $contratacion->fecha=$fecha;
         $contratacion->hora=$hora;
@@ -51,7 +71,7 @@ class CerviciosContratadosController extends Controller
         $contratacion->id_servicio=$request->input('id_catalogo');
         $contratacion->id_evento=$id;
         $contratacion->save();
-        return response()->json(['message'=>'Servicio contratado']);
+        return response()->json(['message'=>'servicio contratado satisfactoriamente']);
     }
 
     /**

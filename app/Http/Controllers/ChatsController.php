@@ -21,12 +21,22 @@ class ChatsController extends Controller
 
 
         $user = $request->user();
+        $verify= DB::table('chats')
+            ->where('id_usuario',$user["id"])
+            ->where('id_proveedor',$proveedor)
+            ->first();
+
+        if (is_null($verify)) {
         $chats = new Chats($data);
         $chats->id_usuario=$user["id"];
         $chats->id_proveedor=$proveedor;
         $chats->save();
         return response()->json([
                     'message' => 'Successfully created chat!'], 201);
+        }
+        return response()->json([
+                    'message' => 'El chat ya existe'], 201);
+
     }
     /**
      * Display a listing of the resource.
