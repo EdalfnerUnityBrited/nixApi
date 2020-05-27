@@ -165,8 +165,8 @@ class AuthController extends Controller
 
 
         $user=$request->user();
-        $stripeCharge = $user->charge(10000, $request->input('paymentMethodId'),[
-            "description" => 'Prueba de mensaje para stripe',
+        $stripeCharge = $user->charge($request->input('monto'), $request->input('paymentMethodId'),[
+            "description" => $request->input('descripcion'),
             'receipt_email' => 'edalfnerunity@gmail.com',
         ]);
         return response()->json(['message'=>'Successfully added card!']);
