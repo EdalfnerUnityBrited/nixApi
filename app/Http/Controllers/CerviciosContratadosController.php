@@ -79,9 +79,15 @@ class CerviciosContratadosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function getContrataciones(Request $request)
     {
-        //
+        $user= $request->user();
+        $contratacion= DB::table('servicioscontratados')
+        ->join('catalogo_servicios', 'catalogo_servicios.id', '=', 'servicioscontratados.id_servicio')
+        ->select('servicioscontratados.*')
+        ->where('catalogo_servicios.id_usuario',$user["id"])
+        ->get();
+         return response()->json(['contrataciones'=>$contratacion]);
     }
 
     /**
