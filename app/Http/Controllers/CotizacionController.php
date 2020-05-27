@@ -59,9 +59,13 @@ class CotizacionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function eraseCoti(Request $request)
     {
-        //
+        DB::table('cotizaciones')
+        ->where('id', '=', $request->input('id'))
+        ->delete();
+        return response()->json([
+                    'message' => 'Borrado correctamente']);
     }
 
     /**
