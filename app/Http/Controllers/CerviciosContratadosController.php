@@ -85,7 +85,7 @@ class CerviciosContratadosController extends Controller
         $contratacion= DB::table('servicioscontratados')
         ->join('catalogo_servicios', 'catalogo_servicios.id', '=', 'servicioscontratados.id_servicio')
         ->join('eventos', 'eventos.id', '=', 'servicioscontratados.id_evento')
-        ->select('servicioscontratados.*','eventos.nombre_evento')
+        ->select('servicioscontratados.*','eventos.nombre_evento','catalogo_servicios.nombre')
         ->where('catalogo_servicios.id_usuario',$user["id"])
         ->get();
          return response()->json(['contrataciones'=>$contratacion]);
