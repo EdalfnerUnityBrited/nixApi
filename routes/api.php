@@ -37,6 +37,7 @@ Route::group(['prefix' => 'auth'], function () {
         Route::put('user', 'AuthController@cambioDatos');//Esta ruta nos sirve para cambiar los datos del usuario
         Route::put('password', 'AuthController@cambioContrasena');//Esta ruta nos sirve para cambiar la contraseña
         Route::post('pagar','AuthController@payment');//Esta ruta nos sirve para realizar un pago
+        Route::get('contrataciones','CerviciosContratadosController@getUserContra');
     });
 
 });
@@ -108,6 +109,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 		Route::post('nuevaContratacion','CerviciosContratadosController@newContratado');
 		Route::post('borrarCotizacion','CotizacionController@eraseCoti');
 		Route::get('contrataciones','CerviciosContratadosController@getContrataciones');
+
 		});
 		Route::get('notificaciones','NotificacionesController@getUser');//Aqui se obtienen las notificaciones del usuario
 

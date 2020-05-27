@@ -97,9 +97,16 @@ class CerviciosContratadosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function getUserContra(Request $request)
     {
-        //
+        $user= $request->user();
+        $contratacion= DB::table('servicioscontratados')
+        ->join('catalogo_servicios', 'catalogo_servicios.id', '=', 'servicioscontratados.id_servicio')
+        ->join('eventos', 'eventos.id', '=', 'servicioscontratados.id_evento')
+        ->select('servicioscontratados.*','eventos.nombre_evento')
+        ->where('eventos.id_creador',$user["id"])
+        ->get();
+         return response()->json(['contrataciones'=>$contratacion]);
     }
 
     /**
