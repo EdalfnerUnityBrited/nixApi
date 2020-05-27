@@ -14,17 +14,16 @@ class ChatsController extends Controller
 
      public function newchat(Request $request) {
         $data = json_decode($request->getContent(), true);
-        
-        Validator::make($data, [
-            'id_proveedor'    => 'required',
-        ])->validate();
-
-
+        $proveedor= DB::table('catalogo_servicios')
+        ->where('catalogo_servicios.id',$request->input('id_catalogo'))
+        ->pluck('catalogo_servicios.id_usuario')
+        ->first();
 
 
         $user = $request->user();
         $chats = new Chats($data);
         $chats->id_usuario=$user["id"];
+        $chats->id_proveedor=$proveedor;
         $chats->save();
         return response()->json([
                     'message' => 'Successfully created chat!'], 201);
