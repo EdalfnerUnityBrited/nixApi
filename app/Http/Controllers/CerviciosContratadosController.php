@@ -154,9 +154,12 @@ class CerviciosContratadosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function cambioEstado(Request $request)
     {
-        //
+        $servicio=Servicioscontratados::find($request->input('id'));
+        $servicio->estado_servicio = $request->input('estado_servicio');
+        $servicio->save();
+        return response()->json(['message'=>'Actualizado contratacion de servicio']);
     }
 
     /**
