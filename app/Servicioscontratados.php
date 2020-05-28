@@ -15,5 +15,6 @@ class Servicioscontratados extends Model
         'hora',
         'metodo_pago',
         'id_evento',
+        'desglose',
     ];
 }

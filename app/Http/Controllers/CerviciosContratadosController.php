@@ -29,29 +29,29 @@ class CerviciosContratadosController extends Controller
         $hora= DB::table('catalogo_servicios')
             ->join('cotizaciones', 'cotizaciones.id_servicio', '=', 'catalogo_servicios.id')
             ->join('eventos', 'cotizaciones.id_evento', '=', 'eventos.id')
-            ->where('catalogo_servicios.id',$request->input('id_catalogo'))
+            ->where('catalogo_servicios.id',$request->input('id_servicio'))
             ->pluck('eventos.hora')
             ->first();
         $fecha= DB::table('catalogo_servicios')
             ->join('cotizaciones', 'catalogo_servicios.id', '=', 'cotizaciones.id_servicio')
             ->join('eventos', 'eventos.id', '=', 'cotizaciones.id_evento')
-            ->where('catalogo_servicios.id',$request->input('id_catalogo'))
+            ->where('catalogo_servicios.id',$request->input('id_servicio'))
             ->pluck('eventos.fecha')
             ->first();
         $id= DB::table('catalogo_servicios')
             ->join('cotizaciones', 'catalogo_servicios.id', '=', 'cotizaciones.id_servicio')
             ->join('eventos', 'eventos.id', '=', 'cotizaciones.id_evento')
-            ->where('catalogo_servicios.id',$request->input('id_catalogo'))
+            ->where('catalogo_servicios.id',$request->input('id_servicio'))
             ->pluck('eventos.id')
             ->first();
         $nombre_evento= DB::table('catalogo_servicios')
             ->join('cotizaciones', 'catalogo_servicios.id', '=', 'cotizaciones.id_servicio')
             ->join('eventos', 'eventos.id', '=', 'cotizaciones.id_evento')
-            ->where('catalogo_servicios.id',$request->input('id_catalogo'))
+            ->where('catalogo_servicios.id',$request->input('id_servicio'))
             ->pluck('eventos.nombre_evento')
             ->first();
         $id_proveedor= DB::table('catalogo_servicios')
-            ->where('catalogo_servicios.id',$request->input('id_catalogo'))
+            ->where('catalogo_servicios.id',$request->input('id_servicio'))
             ->pluck('catalogo_servicios.id_usuario')
             ->first();
         $now = Carbon::now();
@@ -68,7 +68,8 @@ class CerviciosContratadosController extends Controller
         $contratacion->fecha=$fecha;
         $contratacion->hora=$hora;
         $contratacion->metodo_pago=$request->input('metodo_pago');
-        $contratacion->id_servicio=$request->input('id_catalogo');
+        $contratacion->id_servicio=$request->input('id_servicio');
+        $contratacion->desglose=$request->input('desglose');
         $contratacion->id_evento=$id;
         $contratacion->save();
         return response()->json(['message'=>'servicio contratado satisfactoriamente']);
