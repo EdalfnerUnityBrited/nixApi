@@ -143,7 +143,7 @@ class CerviciosContratadosController extends Controller
         ->join('users', 'users.id', '=', 'eventos.id_creador')
         ->select('servicioscontratados.desglose','eventos.*','users.name','users.apellidoP','users.apellidoM','users.telefono','users.email','catalogo_servicios.nombre','servicioscontratados.estado_servicio')
         ->where('servicioscontratados.id',$request->input('id'))
-        ->get();
+        ->first();
          return response()->json(['contrataciones'=>$contratacion]);
     }
 
