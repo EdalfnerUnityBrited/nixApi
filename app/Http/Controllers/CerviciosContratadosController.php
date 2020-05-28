@@ -115,9 +115,16 @@ class CerviciosContratadosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function contId(Request $request)
     {
-        //
+        $user= $request->user();
+        $contratacion= DB::table('servicioscontratados')
+        ->join('catalogo_servicios', 'catalogo_servicios.id', '=', 'servicioscontratados.id_servicio')
+        ->join('eventos', 'eventos.id', '=', 'servicioscontratados.id_evento')
+        ->select('servicioscontratados.*','eventos.nombre_evento','catalogo_servicios.nombre','eventos.lugar')
+        ->where('servicioscontratados.id',$request->input('id'))
+        ->get();
+         return response()->json(['contrataciones'=>$contratacion]);
     }
 
     /**

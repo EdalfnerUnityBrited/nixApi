@@ -110,6 +110,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 		Route::post('borrarCotizacion','CotizacionController@eraseCoti');
 		Route::get('contrataciones','CerviciosContratadosController@getContrataciones');
 		Route::post('articulosPaquete','PaqueteController@getArti');
+		Route::post('contratacionesId','CerviciosContratadosController@contId');
 
 		});
 		Route::get('notificaciones','NotificacionesController@getUser');//Aqui se obtienen las notificaciones del usuario
