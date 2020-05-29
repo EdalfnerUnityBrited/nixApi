@@ -51,7 +51,7 @@ class CerviciosContratadosController extends Controller
         $now = Carbon::now();
                         $notificaciones= new Notificaciones();
                         $notificaciones->id_receptor=$id_proveedor;
-                        $notificaciones->id_evento=$id;
+                        $notificaciones->id_evento=$request->input('id_evento');
                         $notificaciones->fechaFin=$fecha;
                         $notificaciones->fechaInicio=$now;
                         $notificaciones->contenido=("Tienes un servicio para el evento ".$nombre_evento." el dia ".$fecha."");
