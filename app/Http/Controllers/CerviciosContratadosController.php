@@ -38,12 +38,6 @@ class CerviciosContratadosController extends Controller
             ->where('catalogo_servicios.id',$request->input('id_servicio'))
             ->pluck('eventos.fecha')
             ->first();
-        $id= DB::table('catalogo_servicios')
-            ->join('cotizaciones', 'catalogo_servicios.id', '=', 'cotizaciones.id_servicio')
-            ->join('eventos', 'eventos.id', '=', 'cotizaciones.id_evento')
-            ->where('catalogo_servicios.id',$request->input('id_servicio'))
-            ->pluck('eventos.id')
-            ->first();
         $nombre_evento= DB::table('catalogo_servicios')
             ->join('cotizaciones', 'catalogo_servicios.id', '=', 'cotizaciones.id_servicio')
             ->join('eventos', 'eventos.id', '=', 'cotizaciones.id_evento')
@@ -70,7 +64,7 @@ class CerviciosContratadosController extends Controller
         $contratacion->metodo_pago=$request->input('metodo_pago');
         $contratacion->id_servicio=$request->input('id_servicio');
         $contratacion->desglose=$request->input('desglose');
-        $contratacion->id_evento=$id;
+        $contratacion->id_evento=$request->input('id_evento');
         $contratacion->save();
         return response()->json(['message'=>'servicio contratado satisfactoriamente']);
     }
@@ -168,8 +162,16 @@ class CerviciosContratadosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function anticipoPendiente(Request $request)
     {
-        //
+        $now= Carbon::now();
+        $servicio= DB::table('servicioscontratados')
+        ->where('fecha','<',Carbon::now()->addDays(7))
+        ->where('estado_servicio','solicitado')
+        ->delete();
+        
+
+        return response()->json(['message'=>'Borrado satisfactoriamente']);
+
     }
 }
