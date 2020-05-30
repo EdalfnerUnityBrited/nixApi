@@ -116,6 +116,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 		Route::post('contratacionEvento','CerviciosContratadosController@getevent');
 		Route::post('cambioEstado','CerviciosContratadosController@cambioEstado');
 		Route::post('anticipoPendiente','CerviciosContratadosController@anticipoPendiente');
+		Route::post('borrarContratacion','CerviciosContratadosController@borrarContrat');
 
 		});
 		Route::get('notificaciones','NotificacionesController@getUser');//Aqui se obtienen las notificaciones del usuario

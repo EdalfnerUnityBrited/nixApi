@@ -174,4 +174,39 @@ class CerviciosContratadosController extends Controller
         return response()->json(['message'=>'Borrado satisfactoriamente']);
 
     }
+
+    public function borrarContrat(Request $request)
+    {
+        
+        $now= Carbon::now()->addDays(7);
+        $fecha= DB::table('servicioscontratados')
+        ->where('id',$request->input('id'))
+        ->pluck('servicioscontratados.fecha')
+        ->first();
+
+        $fechaSer= new Carbon($fecha);
+        if ($fechaSer<$now) {
+            return response()->json(['message'=>'Se tiene que cancelar con mas de una semana de anticipacion'],404);
+        }
+
+
+        $id_proveedor=DB::table('catalogo_servicios')
+        ->where('id',$request->input('id_servicio'))
+        ->pluck('id_usuario')
+        ->first();
+
+
+        $notificaciones=DB::table('notificaciones')
+        ->join('eventos', 'eventos.id', '=', 'notificaciones.id_evento')
+        ->where('notificaciones.id_receptor',$id_proveedor)
+        ->where('eventos.id', $request->input('id_evento'))
+        ->update(['contenido' => ("El servicio ".$request->input('nombre')." para el evento ".$request->input('nombre_evento')." ha sido cancelado")]);
+        
+        $servicio= DB::table('servicioscontratados')
+        ->where('id',$request->input('id'))
+        ->delete();
+        return response()->json(['message'=>'Borrado correctamente']);
+
+    }
+
 }
