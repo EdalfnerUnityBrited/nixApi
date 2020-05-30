@@ -12,7 +12,9 @@ class Citas extends Model
         'id_usuario',
         'id_servicio',
         'fecha',
-        'hora'
+        'hora',
+        'id_proveedor',
+        'id_evento'
     ];
 
 }

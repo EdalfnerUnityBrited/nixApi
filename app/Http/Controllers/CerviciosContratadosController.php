@@ -26,22 +26,16 @@ class CerviciosContratadosController extends Controller
      */
     public function newContratado(Request $request)
     {
-        $hora= DB::table('catalogo_servicios')
-            ->join('cotizaciones', 'cotizaciones.id_servicio', '=', 'catalogo_servicios.id')
-            ->join('eventos', 'cotizaciones.id_evento', '=', 'eventos.id')
-            ->where('catalogo_servicios.id',$request->input('id_servicio'))
+        $hora= DB::table('eventos')
+            ->where('eventos.id',$request->input('id_evento'))
             ->pluck('eventos.hora')
             ->first();
-        $fecha= DB::table('catalogo_servicios')
-            ->join('cotizaciones', 'catalogo_servicios.id', '=', 'cotizaciones.id_servicio')
-            ->join('eventos', 'eventos.id', '=', 'cotizaciones.id_evento')
-            ->where('catalogo_servicios.id',$request->input('id_servicio'))
+        $fecha= DB::table('eventos')
+            ->where('eventos.id',$request->input('id_evento'))
             ->pluck('eventos.fecha')
             ->first();
-        $nombre_evento= DB::table('catalogo_servicios')
-            ->join('cotizaciones', 'catalogo_servicios.id', '=', 'cotizaciones.id_servicio')
-            ->join('eventos', 'eventos.id', '=', 'cotizaciones.id_evento')
-            ->where('catalogo_servicios.id',$request->input('id_servicio'))
+        $nombre_evento= DB::table('eventos')
+            ->where('eventos.id',$request->input('id_evento'))
             ->pluck('eventos.nombre_evento')
             ->first();
         $id_proveedor= DB::table('catalogo_servicios')
