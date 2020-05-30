@@ -52,7 +52,13 @@ class CerviciosContratadosController extends Controller
                         $notificaciones->tipoNotificacion=1;
                         $notificaciones->save();
        $contratacion=new Servicioscontratados();
-        $contratacion->estado_servicio='pendiente';
+       if ($request->input('metodo_pago')=='linea') {
+           $contratacion->estado_servicio='pendiente';
+       }
+       else{
+        $contratacion->estado_servicio='solicitado';
+       }
+        
         $contratacion->fecha=$fecha;
         $contratacion->hora=$hora;
         $contratacion->metodo_pago=$request->input('metodo_pago');
