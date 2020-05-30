@@ -145,7 +145,10 @@ class CitasController extends Controller
     {
         $user=$request->user();
         $citas=DB::table('citas')
-        ->where('id_proveedor',$user["id"])
+        ->join('eventos', 'eventos.id', '=', 'citas.id_evento')
+        ->join('catalogo_servicios', 'citas.id_servicio', '=', 'catalogo_servicios.id')
+        ->select('citas.*','catalogo_servicios.nombre','eventos.nombre_evento')
+        ->where('citas.id_proveedor',$user["id"])
         ->get();
         return response()->json(['citas'=>$citas]);
     }
