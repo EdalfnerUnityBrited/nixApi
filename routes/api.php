@@ -38,6 +38,7 @@ Route::group(['prefix' => 'auth'], function () {
         Route::put('password', 'AuthController@cambioContrasena');//Esta ruta nos sirve para cambiar la contraseña
         Route::post('pagar','AuthController@payment');//Esta ruta nos sirve para realizar un pago
         Route::get('contrataciones','CerviciosContratadosController@getUserContra');
+        Route::get('citas','CitasController@userCitas');
     });
 
 });
@@ -80,6 +81,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 		});
 		Route::group(['prefix'=>'proveedor'],function(){
 		Route::post('cita','CitasController@agendarCita');//Aqui se crea una cita
+		Route::get('citas','CitasController@provCitas');
 		Route::post('nuevoServicio','CatalogoServicioController@newService');//Aqui se crea un nuevo servicio
 		Route::post('articulo','ArticuloController@crearArticulo');//Aqui se crea un nuevo articulo
 		Route::post('paquete','PaqueteController@addPaquete');//Aqui se crea un nuevo paquete

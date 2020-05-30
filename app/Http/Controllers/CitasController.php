@@ -123,9 +123,13 @@ class CitasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function userCitas(Request $request)
     {
-        //
+        $user=$request->user();
+        $citas=DB::table('citas')
+        ->where('id_usuario',$user["id"])
+        ->get();
+        return response()->json(['citas'=>$citas]);
     }
 
     /**
@@ -134,9 +138,13 @@ class CitasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function provCitas(Request $request)
     {
-        //
+        $user=$request->user();
+        $citas=DB::table('citas')
+        ->where('id_proveedor',$user["id"])
+        ->get();
+        return response()->json(['citas'=>$citas]);
     }
 
     /**
