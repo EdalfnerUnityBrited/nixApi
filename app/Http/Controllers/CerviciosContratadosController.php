@@ -209,4 +209,21 @@ class CerviciosContratadosController extends Controller
 
     }
 
+    public function calificar(Request $request){
+
+        DB::table('calificacion')->insert(
+        ['calificacion' => $request->input('calificacion'), 'id_servicio' => $request->input('id_servicio')]
+        );
+
+        $calificacion=DB::table('calificacion')
+                    ->where('id_servicio', $request->input('id_servicio'))
+                    ->avg('calificacion');
+
+        DB::table('catalogo_servicios')
+        ->where('id',$request->input('id_servicio'))
+        ->update(['calificacion'=>$calificacion]);
+
+        return response()->json(['message'=>'Calificado']);        
+    }
+
 }
