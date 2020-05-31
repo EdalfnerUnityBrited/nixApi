@@ -39,6 +39,7 @@ Route::group(['prefix' => 'auth'], function () {
         Route::post('pagar','AuthController@payment');//Esta ruta nos sirve para realizar un pago
         Route::get('contrataciones','CerviciosContratadosController@getUserContra');
         Route::get('citas','CitasController@userCitas');
+        Route::get('historialServicios','CerviciosContratadosController@getHistUserContra');
     });
 
 });
@@ -119,7 +120,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 		Route::post('anticipoPendiente','CerviciosContratadosController@anticipoPendiente');
 		Route::post('borrarContratacion','CerviciosContratadosController@borrarContrat');
 		Route::post('calificar','CerviciosContratadosController@calificar');
-
+		Route::get('historialServicios','CerviciosContratadosController@getHistContrataciones');
 		});
 		Route::get('notificaciones','NotificacionesController@getUser');//Aqui se obtienen las notificaciones del usuario
 

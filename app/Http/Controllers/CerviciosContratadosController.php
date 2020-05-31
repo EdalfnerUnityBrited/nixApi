@@ -251,4 +251,36 @@ class CerviciosContratadosController extends Controller
                 
     }
 
+        public function getHistUserContra(Request $request)
+    {
+        $now= Carbon::now()->subDays(3);
+        $user= $request->user();
+        $contratacion= DB::table('servicioscontratados')
+        ->join('catalogo_servicios', 'catalogo_servicios.id', '=', 'servicioscontratados.id_servicio')
+        ->join('eventos', 'eventos.id', '=', 'servicioscontratados.id_evento')
+        ->select('servicioscontratados.*','eventos.nombre_evento','catalogo_servicios.nombre')
+        ->where('estado_servicio','pagado')
+        ->orWhere('estado_servicio','calificado')
+        ->where('eventos.id_creador',$user["id"])
+        ->where('servicioscontratados.fecha','<',$now)
+        ->get();
+         return response()->json(['contrataciones'=>$contratacion]);
+    }
+
+        public function getHistContrataciones(Request $request)
+    {
+        $now= Carbon::now()->subDays(3);
+        $user= $request->user();
+        $contratacion= DB::table('servicioscontratados')
+        ->join('catalogo_servicios', 'catalogo_servicios.id', '=', 'servicioscontratados.id_servicio')
+        ->join('eventos', 'eventos.id', '=', 'servicioscontratados.id_evento')
+        ->select('servicioscontratados.*','eventos.nombre_evento','catalogo_servicios.nombre','eventos.lugar')
+        ->where('estado_servicio','pagado')
+        ->orWhere('estado_servicio','calificado')
+        ->where('catalogo_servicios.id_usuario',$user["id"])
+        ->where('servicioscontratados.fecha','<',$now)
+        ->get();
+         return response()->json(['contrataciones'=>$contratacion]);
+    }
+
 }
