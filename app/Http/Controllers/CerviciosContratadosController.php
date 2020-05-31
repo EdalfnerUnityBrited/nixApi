@@ -216,13 +216,18 @@ class CerviciosContratadosController extends Controller
         ->pluck('servicioscontratados.id_servicio')
         ->first();
 
+        $id_evento=DB::table('servicioscontratados')
+        ->where('servicioscontratados.id',$request->input('id_servicio'))
+        ->pluck('servicioscontratados.id_evento')
+        ->first();
+
         $existe= DB::table('calificacion')
-        ->where('id_evento',$request->input('id_evento'))
+        ->where('id_evento',$id_evento)
         ->first();
 
         if (is_null($existe)) {
                     DB::table('calificacion')->insert(
-        ['calificacion' => $request->input('calificacion'), 'id_servicio' => $id_servicio, 'id_evento'=> $request->input('id_evento')]
+        ['calificacion' => $request->input('calificacion'), 'id_servicio' => $id_servicio, 'id_evento'=> $id_evento]
         );
 
         $calificacion=DB::table('calificacion')
