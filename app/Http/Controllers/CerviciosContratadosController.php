@@ -216,8 +216,13 @@ class CerviciosContratadosController extends Controller
         ->pluck('servicioscontratados.id_servicio')
         ->first();
 
-        DB::table('calificacion')->insert(
-        ['calificacion' => $request->input('calificacion'), 'id_servicio' => $id_servicio]
+        $existe= DB::table('calificacion')
+        ->where('id_evento',$request->input('id_evento'))
+        ->first();
+
+        if (is_null($existe)) {
+                    DB::table('calificacion')->insert(
+        ['calificacion' => $request->input('calificacion'), 'id_servicio' => $id_servicio, 'id_evento'=> $request->input('id_evento')]
         );
 
         $calificacion=DB::table('calificacion')
@@ -228,9 +233,13 @@ class CerviciosContratadosController extends Controller
         ->where('id',$id_servicio)
         ->update(['calificacion'=>$calificacion]);
 
+        return response()->json(['message'=>'Calificado']);
+        }
 
 
-        return response()->json(['message'=>'Calificado']);        
+
+        return response()->json(['message'=>'Ya lo calificaste'],404);
+                
     }
 
 }
