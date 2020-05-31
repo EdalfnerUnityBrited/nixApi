@@ -322,4 +322,15 @@ A partir del id del evento se buscan los datos del usuario que ha creado el even
         ->update(['confirmacionasistencia'=>1]);
         return response()->json(['message' =>'Asistencia confirmada']);
     }
+
+    public function historial(Request $request){
+        $user=$request->user();
+        $eventos=DB::table('prospectos')
+        ->join('eventos','eventos.id','prospectos.id_evento')
+        ->where('prospectos.id_prospecto',$user["id"])
+        ->where('confirmacionasistencia',1)
+        ->select('eventos.*','prospectos.estado')
+        ->get();
+        return response()->json(['eventos' =>$eventos]);
+    }
 }

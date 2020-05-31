@@ -72,6 +72,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 	    Route::post('invitados','EventosController@getInvitedUsers');//Aqui se obtienen todos los usuarios que han sido invitados a un evento
 	    Route::post('creador','EventosController@getUserData');//Aqui se obtienen los datos del creador del evento
 	    Route::post('confirmarAsistencia','EventosController@confirmarAsistencia');
+	    Route::get('historial','EventosController@historial');
 	});
 
 		Route::group(['prefix'=>'imagen'],function(){
