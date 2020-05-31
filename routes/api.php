@@ -70,6 +70,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 	    Route::post('id','EventosController@getEventId');//Aqui se busca un evento por su ID
 	    Route::post('invitados','EventosController@getInvitedUsers');//Aqui se obtienen todos los usuarios que han sido invitados a un evento
 	    Route::post('creador','EventosController@getUserData');//Aqui se obtienen los datos del creador del evento
+	    Route::post('confirmarAsistencia','EventosController@confirmarAsistencia');
 	});
 
 		Route::group(['prefix'=>'imagen'],function(){

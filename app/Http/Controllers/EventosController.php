@@ -311,4 +311,15 @@ A partir del id del evento se buscan los datos del usuario que ha creado el even
                 ->get();
                 return response()->json(['usuarios' =>$usuarios]);
     }
+
+    public function confirmarAsistencia(Request $request){
+
+        $user=$request->user();
+        DB::table('prospectos')
+        ->where('id_evento',$request->input('id_evento'))
+        ->where('id_prospecto',$user["id"])
+        ->where('estado',"confirmado")
+        ->update(['confirmacionasistencia'=>1]);
+        return response()->json(['message' =>'Asistencia confirmada']);
+    }
 }
