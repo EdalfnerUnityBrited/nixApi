@@ -32,7 +32,7 @@ class ProspectosController extends Controller
      */
     public function getUserEvent(Request $request)
     {
-        $now= Carbon::now()->subDay();
+        $now= Carbon::now()->subDays(2);
         $user = $request->user();
         $eventos = DB::table('prospectos')
             ->join('eventos', 'eventos.id', '=', 'prospectos.id_evento')
