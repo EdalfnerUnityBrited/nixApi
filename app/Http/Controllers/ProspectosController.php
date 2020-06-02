@@ -147,9 +147,10 @@ class ProspectosController extends Controller
         ->first();
         /*Primeramente se transforma la fecha a Carbo, esto de carbon nos sirve para manipular las fechas y añadir o quitar los tiempos que se requieran aqui lo que primeramente se hace es verificar que los días que han pasado desde que se creó el evento no pasen el mes. Una vez hecho esto se dividen los prospectos entre el cupo, en dado caso que la proporcion de cupo asistentes pase el 60% se colocará que el evento es tendencia
         */
-        $created = new Carbon($fecha->created_at);
-        $now = Carbon::now();
-        $difference = ($created->diff($now)->days < 1)
+        if ($cupo>150) {
+             $created = new Carbon($fecha->created_at);
+                $now = Carbon::now();
+                    $difference = ($created->diff($now)->days < 1)
         ? 'today'
         : $created->diffForHumans($now);
         $asistentes=$prospect/$cupo;
@@ -160,6 +161,8 @@ class ProspectosController extends Controller
                     ->update(['tendencia' => 1]);
             }
         }
+        }
+       
         //Al final solo se retorna el mensaje
        return response()->json(['mensaje'=>$mensaje]);
     }
