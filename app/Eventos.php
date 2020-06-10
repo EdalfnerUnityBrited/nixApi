@@ -29,40 +29,40 @@ class Eventos extends Model
     {
     	if($nombre_evento)
     		return $query->orWhere('nombre_evento', 'LIKE', '%'.$nombre_evento.'%')
-        ->Where('privacidad','=',"0");
+        ->where('privacidad','=',"0");
     }
 
         public function scopeCategoria_evento($query, $categoria_evento)
     {
     	if($categoria_evento)
-    		return $query->orWhere('categoria_evento','LIKE','%'.$categoria_evento.'%')
-        ->Where('privacidad','=',"0");
+    		return $query->where('categoria_evento','LIKE','%'.$categoria_evento.'%')
+        ->where('privacidad','=',"0");
     }
 
             public function scopeCover($query, $cover)
     {
     	if($cover)
-    		return $query->orWhere('cover','<',$cover)
-        ->Where('privacidad','=',"0");
+    		return $query->where('cover','<',$cover)
+        ->where('privacidad','=',"0");
     }
             public function scopeCupo($query, $cupo)
     {
     	if($cupo)
-    		return $query->orWhere('cupo','<',$cupo)
-        ->Where('privacidad','=',"0");
+    		return $query->where('cupo','<',$cupo)
+        ->where('privacidad','=',"0");
     }
             public function scopeLugar($query, $lugar)
     {
     	if($lugar)
-    		return $query->orWhere('municipio','LIKE','%'.$lugar.'%')
-        ->Where('privacidad','=',"0");
+    		return $query->where('municipio','LIKE','%'.$lugar.'%')
+        ->where('privacidad','=',"0");
     }
             public function scopeFechaInicio($query, $fechaInicio,$fechaFinal)
     {
     	if($fechaInicio){
-    		return $query->Where('fecha','>',$fechaInicio)
-                    ->Where('fecha','<',$fechaFinal)
-                    ->Where('privacidad','=',"0");
+    		return $query->where('fecha','>',$fechaInicio)
+                    ->where('fecha','<',$fechaFinal)
+                    ->where('privacidad','=',"0");
         }
 
     }
